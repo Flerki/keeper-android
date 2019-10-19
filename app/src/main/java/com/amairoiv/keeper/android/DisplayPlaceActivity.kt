@@ -1,12 +1,11 @@
 package com.amairoiv.keeper.android
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Place
-import com.amairoiv.keeper.android.service.PlaceService
 
 class DisplayPlaceActivity : AppCompatActivity() {
 
@@ -20,9 +19,11 @@ class DisplayPlaceActivity : AppCompatActivity() {
         val places = intent.extras?.get("PLACES") as Array<Place>
 
         val listView = findViewById<ListView>(R.id.places)
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, places)
-        listView.adapter = arrayAdapter
 
+        val placesList = ArrayList(places.toList())
+
+        val adapter = PlaceAdapter(this, placesList)
+        listView.adapter = adapter
 
         listView.setOnItemClickListener { _, _, position, _ ->
             val nextPlaces = places[position]
