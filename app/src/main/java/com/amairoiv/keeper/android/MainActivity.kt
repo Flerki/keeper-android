@@ -1,10 +1,11 @@
 package com.amairoiv.keeper.android
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,17 +22,18 @@ class MainActivity : AppCompatActivity() {
         dataList.add("Места")
         dataList.add("Вещи")
 
+        val placesIndex = 0
+
         val listView = findViewById<ListView>(R.id.listViewExample)
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
-        listView.setAdapter(arrayAdapter)
+        listView.adapter = arrayAdapter
 
-        listView.setOnItemClickListener { adapterView, _, index, _ ->
-            val clickItemObj = adapterView.adapter.getItem(index)
-            Toast.makeText(
-                this@MainActivity,
-                "You clicked $clickItemObj",
-                Toast.LENGTH_SHORT
-            ).show()
+        listView.setOnItemClickListener { _, _, index, _ ->
+            if (index == placesIndex){
+                val intent = Intent(this, DisplayPlaceActivity::class.java)
+                startActivity(intent)
+            }
         }
+
     }
 }
