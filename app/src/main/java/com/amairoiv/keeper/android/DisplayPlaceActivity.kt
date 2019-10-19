@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import com.amairoiv.keeper.android.model.Place
+import com.amairoiv.keeper.android.service.PlaceService
 
 class DisplayPlaceActivity : AppCompatActivity() {
 
@@ -15,18 +17,18 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     private fun showPlacesView() {
-        val dataList = ArrayList<String>()
-        dataList.add("Место 1")
-        dataList.add("Место 2")
-        dataList.add("Место 3")
-        dataList.add("Место 4")
+        val places = intent.extras?.get("PLACES") as Array<Place>
 
         val listView = findViewById<ListView>(R.id.places)
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, places)
         listView.adapter = arrayAdapter
 
-        listView.setOnItemClickListener { _, _, _, _ ->
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val nextPlaces = places[position]
+
             val intent = Intent(this, DisplayPlaceActivity::class.java)
+            intent.putExtra("PLACES", nextPlaces.children.toTypedArray())
             startActivity(intent)
         }
     }

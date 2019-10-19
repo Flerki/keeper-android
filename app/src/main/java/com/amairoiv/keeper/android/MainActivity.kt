@@ -6,6 +6,7 @@ import android.os.StrictMode
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.amairoiv.keeper.android.service.PlaceService
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,8 +36,11 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = arrayAdapter
 
         listView.setOnItemClickListener { _, _, index, _ ->
-            if (index == placesIndex){
+            if (index == placesIndex) {
                 val intent = Intent(this, DisplayPlaceActivity::class.java)
+                val testUserId = "5d8d0c082948d1417d171cb0"
+                val places = PlaceService.getForUser(testUserId)
+                intent.putExtra("PLACES", places.toTypedArray())
                 startActivity(intent)
             }
         }
