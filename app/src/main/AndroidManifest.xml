@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginActivity" android:noHistory="true">
+        <activity android:name=".RegisterActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".DisplayPlaceActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
