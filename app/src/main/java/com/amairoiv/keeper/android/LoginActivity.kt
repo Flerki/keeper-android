@@ -33,7 +33,9 @@ class LoginActivity : AppCompatActivity() {
             UserService.setUser(userId)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
+
     }
 
     fun showRegisterActivity(view: View) {
