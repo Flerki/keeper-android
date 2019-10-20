@@ -29,8 +29,10 @@ class MainActivity : AppCompatActivity() {
         val dataList = ArrayList<String>()
         dataList.add("Места")
         dataList.add("Вещи")
+        dataList.add("Выход")
 
         val placesIndex = 0
+        val exitIndex = 2
 
         val listView = findViewById<ListView>(R.id.listViewExample)
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
@@ -43,6 +45,14 @@ class MainActivity : AppCompatActivity() {
                 val places = PlaceService.getForUser(testUserId)
                 intent.putExtra("PLACES", places.toTypedArray())
                 startActivity(intent)
+            }
+
+            if (index == exitIndex){
+                val intent = Intent(this, LoginActivity::class.java)
+                UserService.logout()
+                startActivity(intent)
+
+                finish()
             }
         }
 

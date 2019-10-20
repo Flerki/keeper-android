@@ -34,4 +34,8 @@ object UserService {
     fun getUser(): String {
         return userId!!
     }
+
+    fun logout() {
+        userId = null
+    }
 }
