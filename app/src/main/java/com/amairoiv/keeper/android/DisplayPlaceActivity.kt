@@ -3,6 +3,7 @@ package com.amairoiv.keeper.android
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
@@ -13,8 +14,18 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_display_place)
+
+        if (intent.extras?.get("PLACE_ID") == null) {
+            hideInfoAndItemsButtons()
+        }
         showPlacesView()
+    }
+
+    private fun hideInfoAndItemsButtons() {
+        findViewById<Button>(R.id.infoBtn).visibility = View.GONE
+        findViewById<Button>(R.id.itemsBtn).visibility = View.GONE
     }
 
     private fun showPlacesView() {
