@@ -5,15 +5,44 @@
     android:layout_height="match_parent"
     tools:context=".DisplayPlaceActivity">
 
-    <ListView
-        android:id="@+id/places"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:divider="@color/colorPrimary"
-        android:dividerHeight="5dp"
-        android:focusable="true"
-        tools:ignore="MissingConstraints"/>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/placeControls"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <Button
+                android:id="@+id/itemsBtn"
+                android:onClick="showItems"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="Вещи" />
+
+            <Button
+                android:id="@+id/infoBtn"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="Инфо" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/places"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="5dp"
+            android:focusable="true"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

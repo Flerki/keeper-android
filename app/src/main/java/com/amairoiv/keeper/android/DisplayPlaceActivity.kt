@@ -2,10 +2,12 @@ package com.amairoiv.keeper.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Place
+import com.amairoiv.keeper.android.service.PlaceService
 
 class DisplayPlaceActivity : AppCompatActivity() {
 
@@ -29,8 +31,18 @@ class DisplayPlaceActivity : AppCompatActivity() {
             val nextPlaces = places[position]
 
             val intent = Intent(this, DisplayPlaceActivity::class.java)
+            intent.putExtra("PLACE_ID", nextPlaces.id)
             intent.putExtra("PLACES", nextPlaces.children.toTypedArray())
             startActivity(intent)
         }
+    }
+
+    fun showItems(view: View) {
+        val placeId = intent.getStringExtra("PLACE_ID")
+        val items = PlaceService.getItemForPlace(placeId!!)
+
+        val itemsIntent = Intent(this, ItemsActivity::class.java)
+        itemsIntent.putExtra("ITEMS", items.toTypedArray())
+        startActivity(itemsIntent)
     }
 }
