@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ListView
 import android.widget.TextView
 import com.amairoiv.keeper.android.model.Place
+import java.util.Arrays.copyOf
 
 class PlaceInfoActivity : AppCompatActivity() {
 
@@ -16,7 +17,11 @@ class PlaceInfoActivity : AppCompatActivity() {
 
     private fun showPlaceInfo() {
         val placeInfo = intent.extras?.get("PLACE") as Place
-
         findViewById<TextView>(R.id.placeName).text = placeInfo.name
+
+        val location = (intent.extras?.getSerializable("LOCATION")  as Array<String>?)!!
+
+        findViewById<TextView>(R.id.placeLocation).text = location.copyOf(location.size - 1).joinToString(" -> ")
+
     }
 }
