@@ -24,7 +24,8 @@
                 android:text="Вещи" />
 
             <Button
-                android:id="@+id/infoBtn"
+                android:id="@+id/infoPlaceBtn"
+                android:onClick="showPlaceInfo"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"

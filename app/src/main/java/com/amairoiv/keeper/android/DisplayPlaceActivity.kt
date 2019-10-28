@@ -24,7 +24,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     private fun hideInfoAndItemsButtons() {
-        findViewById<Button>(R.id.infoBtn).visibility = View.GONE
+        findViewById<Button>(R.id.infoPlaceBtn).visibility = View.GONE
         findViewById<Button>(R.id.itemsBtn).visibility = View.GONE
     }
 
@@ -42,6 +42,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
             val nextPlaces = places[position]
 
             val intent = Intent(this, DisplayPlaceActivity::class.java)
+            intent.putExtra("PLACE", nextPlaces)
             intent.putExtra("PLACE_ID", nextPlaces.id)
             intent.putExtra("PLACES", nextPlaces.children.toTypedArray())
             startActivity(intent)
@@ -55,5 +56,12 @@ class DisplayPlaceActivity : AppCompatActivity() {
         val itemsIntent = Intent(this, ItemsActivity::class.java)
         itemsIntent.putExtra("ITEMS", items.toTypedArray())
         startActivity(itemsIntent)
+    }
+
+    fun showPlaceInfo(view: View) {
+        val place = intent.getSerializableExtra("PLACE")
+        val placeInfoIntent = Intent(this, PlaceInfoActivity::class.java)
+        placeInfoIntent.putExtra("PLACE", place)
+        startActivity(placeInfoIntent)
     }
 }
