@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
             if (index == placesIndex) {
                 val intent = Intent(this, DisplayPlaceActivity::class.java)
                 val testUserId = UserService.getUser()
-                val places = PlaceService.getForUser(testUserId)
-                intent.putExtra("PLACES", places.toTypedArray())
+                PlaceService.initializePlaceHierarchyFor(testUserId)
+
                 startActivity(intent)
             }
 

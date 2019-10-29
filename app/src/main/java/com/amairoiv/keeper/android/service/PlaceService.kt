@@ -13,7 +13,7 @@ object PlaceService {
 
     private var places: MutableList<Place> = ArrayList()
 
-    fun getForUser(userId: String): List<Place> {
+    fun initializePlaceHierarchyFor(userId: String) {
         val url = "http://10.0.2.2:8080/users/$userId/places"
         val request: Request = Request.Builder()
             .url(url)
@@ -22,7 +22,6 @@ object PlaceService {
         val result = response.body?.string()
 
         places = gson.fromJson(result, Array<Place>::class.java).toMutableList()
-        return places
     }
 
     fun getItemForPlace(placeId: String): List<Item> {
