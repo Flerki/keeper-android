@@ -1,11 +1,11 @@
 package com.amairoiv.keeper.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ListView
+import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.model.Place
-import java.util.Arrays.copyOf
+import com.amairoiv.keeper.android.service.PlaceService
 
 class PlaceInfoActivity : AppCompatActivity() {
 
@@ -23,5 +23,11 @@ class PlaceInfoActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.placeLocation).text = location.copyOf(location.size - 1).joinToString(" -> ")
 
+    }
+
+    fun deletePlace(view: View) {
+        val placeInfo = intent.extras?.get("PLACE") as Place
+        PlaceService.deletePlace(placeInfo.id)
+        finish()
     }
 }

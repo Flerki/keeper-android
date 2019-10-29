@@ -11,7 +11,7 @@ import com.amairoiv.keeper.android.model.Place
 
 class PlaceAdapter(
     private val context: Context,
-    private val dataSource: ArrayList<Place>
+    private val dataSource: MutableList<Place>
 ) : BaseAdapter() {
 
     private val inflater: LayoutInflater =

@@ -12,6 +12,8 @@ import com.amairoiv.keeper.android.service.PlaceService
 
 class DisplayPlaceActivity : AppCompatActivity() {
 
+    private var adapter: PlaceAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,6 +28,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val placeId = intent.extras?.getString("PLACE_ID")
+        adapter?.notifyDataSetChanged()
         if (placeId != null && !PlaceService.exists(placeId)) {
             finish()
         }
@@ -37,14 +40,21 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     private fun showPlacesView() {
-        val places = intent.extras?.get("PLACES") as Array<Place>
+        var places: MutableList<Place>
 
         val listView = findViewById<ListView>(R.id.places)
+        val placeId = intent.extras?.getString("PLACE_ID")
 
-        val placesList = ArrayList(places.toList())
+        if (placeId == null) {
+            places = PlaceService.getRoot()
+        } else {
+            val place = PlaceService.findById(placeId)
+            places = place?.children!!
+        }
 
-        val adapter = PlaceAdapter(this, placesList)
+        adapter = PlaceAdapter(this, places)
         listView.adapter = adapter
+
 
         listView.setOnItemClickListener { _, _, position, _ ->
             val nextPlaces = places[position]
@@ -52,7 +62,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
             val intent = Intent(this, DisplayPlaceActivity::class.java)
             intent.putExtra("PLACE", nextPlaces)
             intent.putExtra("PLACE_ID", nextPlaces.id)
-            intent.putExtra("PLACES", nextPlaces.children.toTypedArray())
 
             var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
             if (location == null) {
