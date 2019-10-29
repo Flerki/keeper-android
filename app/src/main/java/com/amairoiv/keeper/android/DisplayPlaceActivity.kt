@@ -13,13 +13,15 @@ import com.amairoiv.keeper.android.service.PlaceService
 class DisplayPlaceActivity : AppCompatActivity() {
 
     private var adapter: PlaceAdapter? = null
+    private var placeId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_display_place)
 
-        if (intent.extras?.get("PLACE_ID") == null) {
+        placeId = intent.extras?.getString("PLACE_ID")
+        if (placeId == null) {
             hideInfoAndItemsButtons()
         }
         showPlacesView()
@@ -27,9 +29,9 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val placeId = intent.extras?.getString("PLACE_ID")
         adapter?.notifyDataSetChanged()
-        if (placeId != null && !PlaceService.exists(placeId)) {
+
+        if (placeId != null && !PlaceService.exists(placeId!!)) {
             finish()
         }
     }
@@ -43,12 +45,11 @@ class DisplayPlaceActivity : AppCompatActivity() {
         var places: MutableList<Place>
 
         val listView = findViewById<ListView>(R.id.places)
-        val placeId = intent.extras?.getString("PLACE_ID")
 
         if (placeId == null) {
             places = PlaceService.getRoot()
         } else {
-            val place = PlaceService.findById(placeId)
+            val place = PlaceService.findById(placeId!!)
             places = place?.children!!
         }
 
@@ -76,7 +77,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     fun showItems(view: View) {
-        val placeId = intent.getStringExtra("PLACE_ID")
         val items = PlaceService.getItemForPlace(placeId!!)
 
         val itemsIntent = Intent(this, ItemsActivity::class.java)
