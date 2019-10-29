@@ -57,17 +57,17 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            val nextPlaces = places[position]
+            val nextPlace = places[position]
 
             val intent = Intent(this, DisplayPlaceActivity::class.java)
-            intent.putExtra("PLACE", nextPlaces)
-            intent.putExtra("PLACE_ID", nextPlaces.id)
+            intent.putExtra("PLACE", nextPlace)
+            intent.putExtra("PLACE_ID", nextPlace.id)
 
             var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
             if (location == null) {
                 location = arrayOf()
             }
-            location += nextPlaces.name
+            location += nextPlace.name
 
             intent.putExtra("LOCATION", location)
 
