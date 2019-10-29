@@ -23,6 +23,14 @@ class DisplayPlaceActivity : AppCompatActivity() {
         showPlacesView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val placeId = intent.extras?.getString("PLACE_ID")
+        if (placeId != null && !PlaceService.exists(placeId)) {
+            finish()
+        }
+    }
+
     private fun hideInfoAndItemsButtons() {
         findViewById<Button>(R.id.infoPlaceBtn).visibility = View.GONE
         findViewById<Button>(R.id.itemsBtn).visibility = View.GONE
