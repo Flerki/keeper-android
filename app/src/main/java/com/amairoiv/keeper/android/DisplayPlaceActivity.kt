@@ -20,7 +20,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_display_place)
 
-        placeId = intent.extras?.getString("PLACE_ID")
+        placeId = (intent.extras?.getSerializable("PLACE") as Place?)?.id
         if (placeId == null) {
             hideInfoAndItemsButtons()
         }
@@ -62,7 +62,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
             val intent = Intent(this, DisplayPlaceActivity::class.java)
             intent.putExtra("PLACE", nextPlace)
-            intent.putExtra("PLACE_ID", nextPlace.id)
 
             var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
             if (location == null) {
