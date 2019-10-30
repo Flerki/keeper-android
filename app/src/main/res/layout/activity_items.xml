@@ -5,14 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".ItemsActivity">
 
-    <ListView
-        android:id="@+id/items"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:divider="@color/colorPrimary"
-        android:dividerHeight="5dp"
-        android:focusable="true"
-        tools:ignore="MissingConstraints" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/noItemsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:text="Здесь еще нет вещей"/>
+
+        <ListView
+            android:id="@+id/items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="5dp"
+            android:focusable="true"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

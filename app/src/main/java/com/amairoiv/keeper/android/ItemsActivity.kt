@@ -1,7 +1,9 @@
 package com.amairoiv.keeper.android
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.adapter.ItemAdapter
 import com.amairoiv.keeper.android.model.Item
@@ -16,6 +18,8 @@ class ItemsActivity : AppCompatActivity() {
 
     private fun showItemsView() {
         val items = intent.extras?.get("ITEMS") as Array<Item>
+
+        findViewById<TextView>(R.id.noItemsText).visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
 
         val listView = findViewById<ListView>(R.id.items)
 
