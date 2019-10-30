@@ -24,9 +24,10 @@ class RegisterActivity : AppCompatActivity() {
 
     fun register(view: View) {
         val userEmailEditText = findViewById<EditText>(R.id.registerEmail)
+        val password = findViewById<EditText>(R.id.userPasswordRegister).text.toString()
 
         val email = userEmailEditText.text.toString()
-        val userId = UserService.register(email)
+        val userId = UserService.register(email, password)
 
         UserService.setUser(userId)
 

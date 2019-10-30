@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.view.View
 import android.widget.EditText
-import android.widget.ListView
 import com.amairoiv.keeper.android.service.UserService
 
 class LoginActivity : AppCompatActivity() {
@@ -26,8 +25,9 @@ class LoginActivity : AppCompatActivity() {
         val userEmailEditText = findViewById<EditText>(R.id.userEmail)
 
         val email = userEmailEditText.text.toString()
+        val password = findViewById<EditText>(R.id.userPasswordAuth).text.toString()
 
-        val userId = UserService.auth(email)
+        val userId = UserService.auth(email, password)
 
         if (userId != null){
             UserService.setUser(userId)

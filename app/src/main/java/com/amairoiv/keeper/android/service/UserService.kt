@@ -13,8 +13,8 @@ object UserService {
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
     private var userId: String? = null
 
-    fun register(email: String): String {
-        val json = "{\"email\":\"$email\"}"
+    fun register(email: String, password: String): String {
+        val json = "{\"email\":\"$email\", \"password\":\"$password\"}"
         val body = json.toRequestBody(JSON)
         val url = "http://10.0.2.2:8080/users"
         val request: Request = Request.Builder()
@@ -24,11 +24,11 @@ object UserService {
 
         client.newCall(request).execute()
 
-        return auth(email)!!
+        return auth(email, password)!!
     }
 
-    fun auth(email: String): String? {
-        val json = "{\"email\":\"$email\"}"
+    fun auth(email: String, password: String): String? {
+        val json = "{\"email\":\"$email\", \"password\":\"$password\"}"
         val body = json.toRequestBody(JSON)
         val url = "http://10.0.2.2:8080/users"
         val request: Request = Request.Builder()
