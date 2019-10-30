@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Place
@@ -33,6 +34,22 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
         if (placeId != null && !PlaceService.exists(placeId!!)) {
             finish()
+        } else {
+            hideOrShowNoChildrenText()
+        }
+    }
+
+    private fun hideOrShowNoChildrenText() {
+        val textView = findViewById<TextView>(R.id.noChildrenText)
+
+        if (placeId == null && PlaceService.getRoot().isEmpty()) {
+            textView.text = "Нет ни одного места"
+            textView.visibility = View.VISIBLE
+        } else if (placeId != null && PlaceService.findById(placeId!!)!!.children.isEmpty()) {
+            textView.text = "Нет ни одного вложенного места"
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
         }
     }
 

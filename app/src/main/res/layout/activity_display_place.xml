@@ -33,6 +33,12 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/noChildrenText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"/>
+
         <ListView
             android:id="@+id/places"
             android:layout_width="match_parent"
