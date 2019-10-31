@@ -33,7 +33,11 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.place_menu, menu)
-        return placeId != null
+        if (placeId == null) {
+            menu?.findItem(R.id.place_menu_move)?.isVisible = false
+            menu?.findItem(R.id.place_menu_delete)?.isVisible = false
+        }
+        return true
     }
 
     override fun onResume() {
