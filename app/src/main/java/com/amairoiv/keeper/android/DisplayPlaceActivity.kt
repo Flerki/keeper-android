@@ -93,10 +93,19 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     fun showItems(view: View) {
-        val items = PlaceService.getItemForPlace(placeId!!)
 
         val itemsIntent = Intent(this, ItemsActivity::class.java)
+
+        val place = intent.getSerializableExtra("PLACE") as Place
+        itemsIntent.putExtra("PLACE", place)
+
+        val items = PlaceService.getItemForPlace(placeId!!)
         itemsIntent.putExtra("ITEMS", items.toTypedArray())
+
+        var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
+
+        itemsIntent.putExtra("LOCATION", location)
+
         startActivity(itemsIntent)
     }
 
