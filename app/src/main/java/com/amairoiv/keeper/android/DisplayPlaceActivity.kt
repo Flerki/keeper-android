@@ -2,6 +2,8 @@ package com.amairoiv.keeper.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -25,7 +27,30 @@ class DisplayPlaceActivity : AppCompatActivity() {
         if (placeId == null) {
             hideInfoAndItemsButtons()
         }
+        setSupportActionBar(findViewById(R.id.places_toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         showPlacesView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.place_menu, menu)
+        if (placeId == null) {
+            menu?.findItem(R.id.place_menu_move)?.isVisible = false
+            menu?.findItem(R.id.place_menu_delete)?.isVisible = false
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.place_menu_add -> {
+                val intent = Intent(this, CreatePlaceActivity::class.java)
+                intent.putExtra("PARENT_PLACE_ID", placeId)
+                startActivity(intent)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -62,11 +87,14 @@ class DisplayPlaceActivity : AppCompatActivity() {
         var places: MutableList<Place>
 
         val listView = findViewById<ListView>(R.id.places)
+        val toolbarTitle = findViewById<TextView>(R.id.places_toolbar_title)
 
         if (placeId == null) {
             places = PlaceService.getRoot()
+            toolbarTitle.text = "Места"
         } else {
             val place = PlaceService.findById(placeId!!)
+            toolbarTitle.text = place?.name
             places = place?.children!!
         }
 
