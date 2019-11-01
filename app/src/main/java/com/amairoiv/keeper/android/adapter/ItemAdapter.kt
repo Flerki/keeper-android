@@ -11,7 +11,7 @@ import com.amairoiv.keeper.android.model.Item
 
 class ItemAdapter(
     private val context: Context,
-    private val dataSource: ArrayList<Item>
+    private val dataSource: MutableList<Item>
 ) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
