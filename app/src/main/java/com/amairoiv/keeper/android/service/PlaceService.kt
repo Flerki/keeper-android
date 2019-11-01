@@ -82,19 +82,23 @@ object PlaceService {
         }
     }
 
-    fun createPlace(place: CreatePlace) {
+    fun createPlace(dto: CreatePlace) {
         val url = "http://10.0.2.2:8080/places"
         val request: Request = Request.Builder()
             .url(url)
-            .post(gson.toJson(place).toRequestBody(JSON))
+            .post(gson.toJson(dto).toRequestBody(JSON))
             .build()
-        client.newCall(request).execute()
-/*
+
+        val placeId = client.newCall(request).execute()
+            .body!!.string()
+
+        val place = Place(placeId, dto.placeName, ArrayList(), dto.parentPlaceId)
+
         if (place.parentId != null) {
             val parentPlace = findById(place.parentId)
-            parentPlace?.children?.add { it.id == placeId }
+            parentPlace?.children?.add(place)
         } else {
-            places.add { it.id == placeId }
-        }*/
+            places.add(place)
+        }
     }
 }
