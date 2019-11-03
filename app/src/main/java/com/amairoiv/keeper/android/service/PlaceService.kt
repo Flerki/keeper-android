@@ -1,6 +1,7 @@
 package com.amairoiv.keeper.android.service
 
 import com.amairoiv.keeper.android.dto.CreatePlace
+import com.amairoiv.keeper.android.dto.UpdatePlace
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.model.Place
 import com.google.gson.Gson
@@ -62,6 +63,20 @@ object PlaceService {
             }
         }
         return null
+    }
+
+    fun update(place: Place) {
+        val dto = UpdatePlace(place.name, place.parentId)
+
+        val url = "http://10.0.2.2:8080/places/${place.id}"
+        val request: Request = Request.Builder()
+            .url(url)
+            .put(gson.toJson(dto).toRequestBody(JSON))
+            .build()
+        client.newCall(request).execute()
+
+        val placeModel = findById(place.id)
+        placeModel?.name = place.name
     }
 
     fun deletePlace(placeId: String) {
