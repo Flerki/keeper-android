@@ -38,10 +38,10 @@ class RegisterActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {
                 if (password.text.toString() != passwordRepeat.text.toString()) {
                     findViewById<TextView>(R.id.confirmUserPasswordError).isVisible = true
-                    findViewById<Button>(R.id.registerButton).isClickable = false
+                    findViewById<Button>(R.id.registerButton).isEnabled = false
                 } else {
                     findViewById<TextView>(R.id.confirmUserPasswordError).isVisible = false
-                    findViewById<Button>(R.id.registerButton).isClickable = true
+                    findViewById<Button>(R.id.registerButton).isEnabled = true
                 }
             }
 
