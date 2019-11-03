@@ -50,6 +50,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPasswordText" />
 
+    <TextView
+        android:id="@+id/confirmUserPasswordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="24dp"
+        android:text="Повторите пароль:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userPasswordRegister" />
+
+    <EditText
+        android:id="@+id/confirmUserPasswordRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmUserPasswordText" />
+
+    <TextView
+        android:id="@+id/confirmUserPasswordError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:text="Пароли не совпадают!"
+        android:textColor="#EB1C1C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmUserPasswordRegister" />
+
     <Button
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
@@ -59,7 +92,7 @@
         android:onClick="register"
         android:text="Зарегистрироваться"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userPasswordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmUserPasswordError" />
 
     <TextView
         android:id="@+id/alreadyRegisterText"
