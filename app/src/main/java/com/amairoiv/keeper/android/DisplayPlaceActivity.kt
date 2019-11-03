@@ -114,7 +114,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
             val nextPlace = places[position]
 
             val intent = Intent(this, DisplayPlaceActivity::class.java)
-            intent.putExtra("PLACE", nextPlace)
             intent.putExtra("PLACE_ID", nextPlace.id)
 
             var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
