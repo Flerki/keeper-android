@@ -24,8 +24,11 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_display_place)
 
-        place = intent.extras?.getSerializable("PLACE") as Place?
-        placeId = place?.id
+        placeId = intent.extras?.getString("PLACE_ID")
+
+        if (placeId != null){
+            place = PlaceService.findById(placeId!!)
+        }
 
         if (place == null) {
             hideInfoAndItemsButtons()
@@ -45,7 +48,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.place_menu_add -> {
                 val intent = Intent(this, CreatePlaceActivity::class.java)
                 intent.putExtra("PARENT_PLACE_ID", placeId)
@@ -64,7 +67,13 @@ class DisplayPlaceActivity : AppCompatActivity() {
             finish()
         } else {
             hideOrShowNoChildrenText()
+            setToolbarTitle()
         }
+    }
+
+    private fun setToolbarTitle() {
+        val toolbarTitle = findViewById<TextView>(R.id.places_toolbar_title)
+        toolbarTitle.text = if (placeId == null) "Места" else place!!.name
     }
 
     private fun hideOrShowNoChildrenText() {
@@ -90,13 +99,10 @@ class DisplayPlaceActivity : AppCompatActivity() {
         val places: MutableList<Place>
 
         val listView = findViewById<ListView>(R.id.places)
-        val toolbarTitle = findViewById<TextView>(R.id.places_toolbar_title)
 
         if (placeId == null) {
             places = PlaceService.getRoot()
-            toolbarTitle.text = "Места"
         } else {
-            toolbarTitle.text = place?.name
             places = place!!.children
         }
 
@@ -109,6 +115,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
             val intent = Intent(this, DisplayPlaceActivity::class.java)
             intent.putExtra("PLACE", nextPlace)
+            intent.putExtra("PLACE_ID", nextPlace.id)
 
             var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
             if (location == null) {
