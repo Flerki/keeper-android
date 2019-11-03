@@ -9,15 +9,19 @@ import com.amairoiv.keeper.android.service.PlaceService
 
 class PlaceInfoActivity : AppCompatActivity() {
 
+    private lateinit var place: Place
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_info)
+
+        place = intent.extras?.get("PLACE") as Place
+
         showPlaceInfo()
     }
 
     private fun showPlaceInfo() {
-        val placeInfo = intent.extras?.get("PLACE") as Place
-        findViewById<TextView>(R.id.placeName).text = placeInfo.name
+        findViewById<TextView>(R.id.placeName).text = place.name
 
         val location = (intent.extras?.getSerializable("LOCATION")  as Array<String>?)!!
 
