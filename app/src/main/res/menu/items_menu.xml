@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/items_menu_add"
+        android:icon="@drawable/ic_add_foreground"
+        android:title="Добавить"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/items_menu_move"
+        android:title="Переместить" />
+
+    <item
+        android:id="@+id/items_menu_delete"
+        android:title="Удалить" />
+
+</menu>

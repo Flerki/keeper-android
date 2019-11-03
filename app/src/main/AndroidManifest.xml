@@ -18,6 +18,7 @@
         <activity android:name=".PlaceInfoActivity" />
         <activity android:name=".ItemsActivity" />
         <activity android:name=".CreatePlaceActivity" />
+        <activity android:name=".CreateItemActivity" />
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".LoginActivity"

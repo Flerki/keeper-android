@@ -1,5 +1,6 @@
 package com.amairoiv.keeper.android.service
 
+import com.amairoiv.keeper.android.dto.CreateItem
 import com.amairoiv.keeper.android.dto.UpdateItem
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.model.Place
@@ -11,6 +12,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
 object ItemService {
+
     private val client = OkHttpClient()
     private val gson = Gson()
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
@@ -25,7 +27,6 @@ object ItemService {
 
         return gson.fromJson(result, Item::class.java)
     }
-
     fun deleteItem(itemId: String) {
         val url = "http://10.0.2.2:8080/items/$itemId"
         val request: Request = Request.Builder()
@@ -60,6 +61,16 @@ object ItemService {
         val request: Request = Request.Builder()
             .url(url)
             .put(gson.toJson(dto).toRequestBody(JSON))
+            .build()
+
+        client.newCall(request).execute()
+    }
+
+    fun createItem(dto: CreateItem) {
+        val url = "http://10.0.2.2:8080/items"
+        val request: Request = Request.Builder()
+            .url(url)
+            .post(gson.toJson(dto).toRequestBody(JSON))
             .build()
 
         client.newCall(request).execute()

@@ -2,6 +2,8 @@ package com.amairoiv.keeper.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
@@ -25,8 +27,31 @@ class ItemsActivity : AppCompatActivity() {
         extras = intent.extras!!
         place = extras.getSerializable("PLACE") as Place
         adapter = ItemAdapter(this, items)
+        setSupportActionBar(findViewById(R.id.items_toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         showItemsView()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.items_menu, menu)
+        if (items.isEmpty()) {
+            menu?.findItem(R.id.items_menu_move)?.isVisible = false
+            menu?.findItem(R.id.items_menu_delete)?.isVisible = false
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.items_menu_add -> {
+                val intent = Intent(this, CreateItemActivity::class.java)
+                intent.putExtra("PLACE_ID", place.id)
+                startActivity(intent)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -36,9 +61,15 @@ class ItemsActivity : AppCompatActivity() {
         this.items.clear()
         this.items.addAll(items)
         adapter.notifyDataSetChanged()
-
+        setToolbarTitle()
         findViewById<TextView>(R.id.noItemsText).visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
     }
+
+    private fun setToolbarTitle() {
+        val toolbarTitle = findViewById<TextView>(R.id.items_toolbar_title)
+        toolbarTitle.text = "Вещи в ${place.name}"
+    }
+
 
     private fun showItemsView() {
 
