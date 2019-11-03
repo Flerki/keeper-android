@@ -110,10 +110,41 @@ object PlaceService {
         val place = Place(placeId, dto.placeName, ArrayList(), dto.parentPlaceId)
 
         if (place.parentId != null) {
-            val parentPlace = findById(place.parentId)
+            val parentPlace = findById(place.parentId!!)
             parentPlace?.children?.add(place)
         } else {
             places.add(place)
         }
+    }
+
+    fun updateLocation(placeForMove: Place, newParent: Place?) {
+        val newParentId = newParent?.id
+        val oldParentId = placeForMove.parentId
+        if (oldParentId == newParentId) {
+            return
+        }
+
+        val dto = UpdatePlace(placeForMove.name, newParentId)
+
+        val url = "http://10.0.2.2:8080/places/${placeForMove.id}"
+        val request: Request = Request.Builder()
+            .url(url)
+            .put(gson.toJson(dto).toRequestBody(JSON))
+            .build()
+        client.newCall(request).execute()
+
+        if (oldParentId == null) {
+            places.removeIf { it.id == placeForMove.id }
+        } else {
+            findById(oldParentId)?.children?.removeIf { it.id == placeForMove.id }
+        }
+
+        if (newParentId == null) {
+            places.add(placeForMove)
+        } else {
+            findById(newParentId)?.children?.add(placeForMove)
+        }
+
+        placeForMove.parentId = newParentId
     }
 }

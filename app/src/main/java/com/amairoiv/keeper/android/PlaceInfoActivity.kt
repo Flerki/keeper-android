@@ -1,6 +1,7 @@
 package com.amairoiv.keeper.android
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,5 +68,12 @@ class PlaceInfoActivity : AppCompatActivity() {
         val placeInfo = intent.extras?.get("PLACE") as Place
         PlaceService.deletePlace(placeInfo.id)
         finish()
+    }
+
+    fun movePlace(view: View) {
+        val intent = Intent(this, MoveActivity::class.java)
+        intent.putExtra("PLACE", place)
+        startActivity(intent)
+
     }
 }
