@@ -17,14 +17,17 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
     private var adapter: PlaceAdapter? = null
     private var placeId: String? = null
+    private var place: Place? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_display_place)
 
-        placeId = (intent.extras?.getSerializable("PLACE") as Place?)?.id
-        if (placeId == null) {
+        place = intent.extras?.getSerializable("PLACE") as Place?
+        placeId = place?.id
+
+        if (place == null) {
             hideInfoAndItemsButtons()
         }
         setSupportActionBar(findViewById(R.id.places_toolbar))
@@ -34,7 +37,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.place_menu, menu)
-        if (placeId == null) {
+        if (place == null) {
             menu?.findItem(R.id.place_menu_move)?.isVisible = false
             menu?.findItem(R.id.place_menu_delete)?.isVisible = false
         }
@@ -84,7 +87,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     private fun showPlacesView() {
-        var places: MutableList<Place>
+        val places: MutableList<Place>
 
         val listView = findViewById<ListView>(R.id.places)
         val toolbarTitle = findViewById<TextView>(R.id.places_toolbar_title)
@@ -93,9 +96,8 @@ class DisplayPlaceActivity : AppCompatActivity() {
             places = PlaceService.getRoot()
             toolbarTitle.text = "Места"
         } else {
-            val place = PlaceService.findById(placeId!!)
             toolbarTitle.text = place?.name
-            places = place?.children!!
+            places = place!!.children
         }
 
         adapter = PlaceAdapter(this, places)
@@ -124,13 +126,12 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
         val itemsIntent = Intent(this, ItemsActivity::class.java)
 
-        val place = intent.getSerializableExtra("PLACE") as Place
         itemsIntent.putExtra("PLACE", place)
 
         val items = PlaceService.getItemForPlace(placeId!!)
         itemsIntent.putExtra("ITEMS", items.toTypedArray())
 
-        var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
+        val location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
 
         itemsIntent.putExtra("LOCATION", location)
 
@@ -138,7 +139,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     fun showPlaceInfo(view: View) {
-        val place = intent.getSerializableExtra("PLACE")
         val location = intent.getSerializableExtra("LOCATION")
 
         val placeInfoIntent = Intent(this, PlaceInfoActivity::class.java)
