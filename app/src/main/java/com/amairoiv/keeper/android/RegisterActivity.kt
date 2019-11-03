@@ -15,9 +15,11 @@ import com.amairoiv.keeper.android.service.UserService
 
 class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var password: EditText
+    private lateinit var passwordRepeat: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
         val SDK_INT = android.os.Build.VERSION.SDK_INT
         if (SDK_INT > 8) {
             val policy = StrictMode.ThreadPolicy.Builder()
@@ -25,11 +27,16 @@ class RegisterActivity : AppCompatActivity() {
             StrictMode.setThreadPolicy(policy)
         }
         setContentView(R.layout.activity_register)
+
+        password = findViewById(R.id.userPasswordRegister)
+        passwordRepeat = findViewById(R.id.confirmUserPasswordRegister)
+
         findViewById<TextView>(R.id.confirmUserPasswordError).isVisible = false
-        findViewById<EditText>(R.id.confirmUserPasswordRegister).addTextChangedListener(object :
+
+        val passwordIdentityCheck = object :
             TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                if (findViewById<EditText>(R.id.userPasswordRegister).text.toString() != p0.toString()) {
+                if (password.text.toString() != passwordRepeat.text.toString()) {
                     findViewById<TextView>(R.id.confirmUserPasswordError).isVisible = true
                     findViewById<Button>(R.id.registerButton).isClickable = false
                 } else {
@@ -44,12 +51,15 @@ class RegisterActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 findViewById<TextView>(R.id.confirmUserPasswordError).isVisible = false
             }
-        })
+        }
+        password.addTextChangedListener(passwordIdentityCheck)
+        passwordRepeat.addTextChangedListener(passwordIdentityCheck)
+
     }
 
     fun register(view: View) {
         val userEmailEditText = findViewById<EditText>(R.id.registerEmail)
-        val password = findViewById<EditText>(R.id.userPasswordRegister).text.toString()
+        val password = this.password.text.toString()
 
         val email = userEmailEditText.text.toString()
         val userId = UserService.register(email, password)
