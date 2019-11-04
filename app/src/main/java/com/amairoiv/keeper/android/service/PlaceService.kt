@@ -37,7 +37,11 @@ object PlaceService {
         val response: Response = client.newCall(request).execute()
         val result = response.body?.string()
 
-        return gson.fromJson(result, Array<Item>::class.java).toList()
+        val resultList = gson.fromJson(result, Array<Item>::class.java).toList()
+
+        //TODO: add placeId to response entities?
+        resultList.forEach{it.placeId = placeId}
+        return resultList
     }
 
     fun getRoot(): MutableList<Place> {
