@@ -56,13 +56,16 @@ class PlaceInfoActivity : AppCompatActivity() {
         showPlaceInfo()
     }
 
-    private fun showPlaceInfo() {
-        placeNameTextView.text = place.name
-
+    override fun onResume() {
+        super.onResume()
         val location = PlaceService.getLocation(place.id)
 
         findViewById<TextView>(R.id.placeLocation).text =
             location.dropLast(1).joinToString(" -> ") { it.name }
+    }
+
+    private fun showPlaceInfo() {
+        placeNameTextView.text = place.name
     }
 
     fun deletePlace(view: View) {
