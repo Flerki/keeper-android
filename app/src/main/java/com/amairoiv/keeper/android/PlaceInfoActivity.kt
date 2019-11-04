@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -17,7 +16,6 @@ class PlaceInfoActivity : AppCompatActivity() {
 
     private lateinit var place: Place
     private lateinit var placeNameTextView: TextView
-    private lateinit var renameBtn: Button
     private val c: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,32 +24,7 @@ class PlaceInfoActivity : AppCompatActivity() {
 
         place = intent.extras?.get("PLACE") as Place
 
-        renameBtn = findViewById(R.id.placeInfoRenameBtn)
         placeNameTextView = findViewById(R.id.placeName)
-
-        renameBtn.setOnClickListener {
-            val layoutInflaterAndroid = LayoutInflater.from(c)
-            val mView = layoutInflaterAndroid.inflate(R.layout.name_input_dialog, null)
-            val alertDialogBuilderUserInput = AlertDialog.Builder(c)
-            alertDialogBuilderUserInput.setView(mView)
-
-            val userInputDialogEditText = mView.findViewById(R.id.userInputDialog) as EditText
-            alertDialogBuilderUserInput
-                .setCancelable(false)
-                .setPositiveButton("Сохранить") { _, _ ->
-                    val newName = userInputDialogEditText.text.toString()
-                    val updatedPlace = Place(place.id, newName, place.children, place.parentId)
-                    PlaceService.update(updatedPlace)
-                    place.name = newName
-                    placeNameTextView.text = place.name
-                }
-                .setNegativeButton(
-                    "Отменить"
-                ) { dialogBox, _ -> dialogBox.cancel() }
-
-            val alertDialogAndroid = alertDialogBuilderUserInput.create()
-            alertDialogAndroid.show()
-        }
 
         showPlaceInfo()
     }
@@ -79,5 +52,29 @@ class PlaceInfoActivity : AppCompatActivity() {
         intent.putExtra("PLACE", place)
         startActivity(intent)
 
+    }
+
+    fun rename(view: View) {
+        val layoutInflaterAndroid = LayoutInflater.from(c)
+        val mView = layoutInflaterAndroid.inflate(R.layout.name_input_dialog, null)
+        val alertDialogBuilderUserInput = AlertDialog.Builder(c)
+        alertDialogBuilderUserInput.setView(mView)
+
+        val userInputDialogEditText = mView.findViewById(R.id.userInputDialog) as EditText
+        alertDialogBuilderUserInput
+            .setCancelable(false)
+            .setPositiveButton("Сохранить") { _, _ ->
+                val newName = userInputDialogEditText.text.toString()
+                val updatedPlace = Place(place.id, newName, place.children, place.parentId)
+                PlaceService.update(updatedPlace)
+                place.name = newName
+                placeNameTextView.text = place.name
+            }
+            .setNegativeButton(
+                "Отменить"
+            ) { dialogBox, _ -> dialogBox.cancel() }
+
+        val alertDialogAndroid = alertDialogBuilderUserInput.create()
+        alertDialogAndroid.show()
     }
 }
