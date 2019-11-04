@@ -22,7 +22,7 @@ class PlaceInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_info)
 
-        place = intent.extras?.get("PLACE") as Place
+        place = intent.getSerializableExtra("PLACE") as Place
 
         placeNameTextView = findViewById(R.id.placeName)
 
@@ -42,8 +42,7 @@ class PlaceInfoActivity : AppCompatActivity() {
     }
 
     fun deletePlace(view: View) {
-        val placeInfo = intent.extras?.get("PLACE") as Place
-        PlaceService.deletePlace(placeInfo.id)
+        PlaceService.deletePlace(place.id)
         finish()
     }
 
@@ -51,7 +50,6 @@ class PlaceInfoActivity : AppCompatActivity() {
         val intent = Intent(this, MoveActivity::class.java)
         intent.putExtra("PLACE", place)
         startActivity(intent)
-
     }
 
     fun rename(view: View) {
