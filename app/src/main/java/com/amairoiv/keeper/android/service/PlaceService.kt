@@ -147,4 +147,21 @@ object PlaceService {
 
         placeForMove.parentId = newParentId
     }
+
+    fun getLocation(placeId: String): List<Place> {
+        var currentPlace = findById(placeId)!!
+
+        val result = ArrayList<Place>()
+        result.add(currentPlace)
+
+        var currentPlaceId: String?
+        while (currentPlace.parentId != null){
+            currentPlaceId = currentPlace.parentId
+            currentPlace = findById(currentPlaceId!!)!!
+            result.add(currentPlace)
+        }
+
+        result.reverse()
+        return result
+    }
 }
