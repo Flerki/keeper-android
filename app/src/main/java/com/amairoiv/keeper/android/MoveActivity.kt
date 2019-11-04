@@ -33,7 +33,7 @@ class MoveActivity : AppCompatActivity() {
     private fun show() {
         val lLayout = findViewById<LinearLayout>(R.id.layout)
 
-        backButton = findViewById(R.id.backBtn)
+        backButton = this.findViewById(R.id.backBtn)
         backButton.isEnabled = false
 
         currentPlaceStack.push(null)
@@ -58,7 +58,7 @@ class MoveActivity : AppCompatActivity() {
 
         view.setOnItemClickListener { _, _, position, _ ->
             view.visibility = View.GONE
-            val chosenPlace = places[position]
+            val chosenPlace = placesCopy[position]
             currentPlaceStack.push(chosenPlace)
 
             val children = chosenPlace.children
