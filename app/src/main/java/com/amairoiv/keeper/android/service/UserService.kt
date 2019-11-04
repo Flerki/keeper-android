@@ -41,6 +41,25 @@ object UserService {
         return result
     }
 
+    fun addPlace(placeId: String){
+        val url = "http://10.0.2.2:8080/users/$userId/places/$placeId"
+        val request: Request = Request.Builder()
+            .url(url)
+            .put("".toRequestBody())
+            .build()
+        client.newCall(request).execute()
+    }
+
+    fun deletePlace(placeId: String){
+        val url = "http://10.0.2.2:8080/users/$userId/places/$placeId"
+        val request: Request = Request.Builder()
+            .url(url)
+            .delete("".toRequestBody())
+            .build()
+        client.newCall(request).execute()
+
+    }
+
     fun setUser(userId: String) {
         this.userId = userId
     }

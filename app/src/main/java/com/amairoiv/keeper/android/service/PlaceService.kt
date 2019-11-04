@@ -134,12 +134,14 @@ object PlaceService {
         client.newCall(request).execute()
 
         if (oldParentId == null) {
+            UserService.deletePlace(placeForMove.id)
             places.removeIf { it.id == placeForMove.id }
         } else {
             findById(oldParentId)?.children?.removeIf { it.id == placeForMove.id }
         }
 
         if (newParentId == null) {
+            UserService.addPlace(placeForMove.id)
             places.add(placeForMove)
         } else {
             findById(newParentId)?.children?.add(placeForMove)
