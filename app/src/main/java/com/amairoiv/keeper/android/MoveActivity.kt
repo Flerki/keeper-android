@@ -14,7 +14,7 @@ import java.util.*
 
 class MoveActivity : AppCompatActivity() {
 
-    private var placeForMove: Place? = null
+    private lateinit var placeForMove: Place
 
     private var currentPlaceStack: Stack<Place?> = Stack()
     private var placeListsStack: Stack<ListView> = Stack()
@@ -25,7 +25,7 @@ class MoveActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_move)
 
-        placeForMove = intent.extras?.getSerializable("PLACE") as Place?
+        placeForMove = intent.getSerializableExtra("PLACE") as Place
 
         show()
     }
@@ -42,7 +42,7 @@ class MoveActivity : AppCompatActivity() {
         moveButton.text = "Переместить"
         moveButton.setOnClickListener {
             val currentPlace = currentPlaceStack.pop()
-            PlaceService.updateLocation(placeForMove!!, currentPlace)
+            PlaceService.updateLocation(placeForMove, currentPlace)
             finish()
         }
         lLayout.addView(moveButton)
