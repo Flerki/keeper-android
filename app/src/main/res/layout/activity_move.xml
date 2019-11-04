@@ -6,4 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".MoveActivity">
 
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="move"
+            android:text="Пеместить" />
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="back"
+            android:text="Назад" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="cancel"
+            android:text="Отменить" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

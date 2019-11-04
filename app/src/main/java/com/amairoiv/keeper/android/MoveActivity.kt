@@ -31,46 +31,14 @@ class MoveActivity : AppCompatActivity() {
     }
 
     private fun show() {
-        val lLayout = LinearLayout(this)
-        lLayout.orientation = LinearLayout.VERTICAL
-        lLayout.layoutParams = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.MATCH_PARENT
-        )
+        val lLayout = findViewById<LinearLayout>(R.id.layout)
 
-        val moveButton = Button(this)
-        moveButton.text = "Переместить"
-        moveButton.setOnClickListener {
-            val currentPlace = currentPlaceStack.pop()
-            PlaceService.updateLocation(placeForMove, currentPlace)
-            finish()
-        }
-        lLayout.addView(moveButton)
-
-        backButton = Button(this)
+        backButton = findViewById(R.id.backBtn)
         backButton.isEnabled = false
-        backButton.text = "Назад"
-        backButton.setOnClickListener {
-            currentPlaceStack.pop()
-            placeListsStack.pop().visibility = View.GONE
-            placeListsStack.peek().visibility = View.VISIBLE
-
-            if (placeListsStack.size == 1) {
-                backButton.isEnabled = false
-            }
-        }
-        lLayout.addView(backButton)
-
-        val cancelButton = Button(this)
-        cancelButton.text = "Отменить"
-        cancelButton.setOnClickListener { finish() }
-        lLayout.addView(cancelButton)
 
         currentPlaceStack.push(null)
         val root = PlaceService.getRoot()
         addListViewForPlaces(root, lLayout)
-
-        setContentView(lLayout)
     }
 
     private fun addListViewForPlaces(places: MutableList<Place>, layout: LinearLayout) {
@@ -100,6 +68,26 @@ class MoveActivity : AppCompatActivity() {
         }
 
         layout.addView(view)
+    }
+
+    fun move(view: View) {
+        val currentPlace = currentPlaceStack.pop()
+        PlaceService.updateLocation(placeForMove, currentPlace)
+        finish()
+    }
+
+    fun back(view: View) {
+        currentPlaceStack.pop()
+        placeListsStack.pop().visibility = View.GONE
+        placeListsStack.peek().visibility = View.VISIBLE
+
+        if (placeListsStack.size == 1) {
+            backButton.isEnabled = false
+        }
+    }
+
+    fun cancel(view: View) {
+        finish()
     }
 
 }
