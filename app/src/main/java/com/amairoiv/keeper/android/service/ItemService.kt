@@ -8,11 +8,23 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 
 object ItemService {
     private val client = OkHttpClient()
     private val gson = Gson()
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+
+    fun get(itemId: String): Item {
+        val url = "http://10.0.2.2:8080/items/$itemId"
+        val request: Request = Request.Builder()
+            .url(url)
+            .build()
+        val response: Response = client.newCall(request).execute()
+        val result = response.body?.string()
+
+        return gson.fromJson(result, Item::class.java)
+    }
 
     fun deleteItem(itemId: String) {
         val url = "http://10.0.2.2:8080/items/$itemId"

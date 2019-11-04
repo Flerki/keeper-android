@@ -15,7 +15,6 @@ import com.amairoiv.keeper.android.service.PlaceService
 
 class ItemInfoActivity : AppCompatActivity() {
 
-    private lateinit var place: Place
     private lateinit var item: Item
     private lateinit var placeNameTextView: TextView
 
@@ -30,9 +29,13 @@ class ItemInfoActivity : AppCompatActivity() {
 
         placeNameTextView = findViewById(R.id.itemName)
         placeNameTextView.text = item.name
+    }
 
-        place = intent.getSerializableExtra("PLACE") as Place
-        val location =  PlaceService.getLocation(place.id)
+    override fun onResume() {
+        super.onResume()
+
+        item = ItemService.get(item.id)
+        val location =  PlaceService.getLocation(item.placeId)
 
         findViewById<TextView>(R.id.itemLocation).text =
             location.joinToString(" -> ") { it.name }
