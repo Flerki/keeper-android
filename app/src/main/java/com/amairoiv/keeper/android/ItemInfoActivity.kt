@@ -21,9 +21,11 @@ class ItemInfoActivity : AppCompatActivity() {
         val item = intent.extras?.get("ITEM") as Item
         findViewById<TextView>(R.id.itemName).text = item.name
 
-        val location = (intent.extras?.getSerializable("LOCATION")  as Array<String>?)!!
+        val place = intent.getSerializableExtra("PLACE") as Place
+        val location =  PlaceService.getLocation(place.id)
 
-        findViewById<TextView>(R.id.itemLocation).text = location.joinToString(" -> ")
+        findViewById<TextView>(R.id.itemLocation).text =
+            location.joinToString(" -> ") { it.name }
     }
 
     fun deleteItem(view: View) {

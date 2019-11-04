@@ -116,14 +116,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
             val intent = Intent(this, DisplayPlaceActivity::class.java)
             intent.putExtra("PLACE_ID", nextPlace.id)
 
-            var location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
-            if (location == null) {
-                location = arrayOf()
-            }
-            location += nextPlace.name
-
-            intent.putExtra("LOCATION", location)
-
             startActivity(intent)
         }
     }
@@ -137,19 +129,12 @@ class DisplayPlaceActivity : AppCompatActivity() {
         val items = PlaceService.getItemForPlace(placeId!!)
         itemsIntent.putExtra("ITEMS", items.toTypedArray())
 
-        val location = this.intent.extras?.getSerializable("LOCATION") as Array<String>?
-
-        itemsIntent.putExtra("LOCATION", location)
-
         startActivity(itemsIntent)
     }
 
     fun showPlaceInfo(view: View) {
-        val location = intent.getSerializableExtra("LOCATION")
-
         val placeInfoIntent = Intent(this, PlaceInfoActivity::class.java)
         placeInfoIntent.putExtra("PLACE", place)
-        placeInfoIntent.putExtra("LOCATION", location)
         startActivity(placeInfoIntent)
     }
 }

@@ -51,9 +51,7 @@ class ItemsActivity : AppCompatActivity() {
 
             val intent = Intent(this, ItemInfoActivity::class.java)
             intent.putExtra("ITEM", item)
-
-            val location = extras.getSerializable("LOCATION") as Array<String>?
-            intent.putExtra("LOCATION", location)
+            intent.putExtra("PLACE", place)
 
             startActivity(intent)
         }

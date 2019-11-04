@@ -59,9 +59,10 @@ class PlaceInfoActivity : AppCompatActivity() {
     private fun showPlaceInfo() {
         placeNameTextView.text = place.name
 
-        val location = (intent.extras?.getSerializable("LOCATION")  as Array<String>?)!!
+        val location = PlaceService.getLocation(place.id)
 
-        findViewById<TextView>(R.id.placeLocation).text = location.copyOf(location.size - 1).joinToString(" -> ")
+        findViewById<TextView>(R.id.placeLocation).text =
+            location.dropLast(1).joinToString(" -> ") { it.name }
     }
 
     fun deletePlace(view: View) {
