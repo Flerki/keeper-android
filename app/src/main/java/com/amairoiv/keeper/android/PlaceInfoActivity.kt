@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -26,6 +27,13 @@ class PlaceInfoActivity : AppCompatActivity() {
 
         placeNameTextView = findViewById(R.id.placeName)
 
+        findViewById<Button>(R.id.back_to_places_btn_id).setOnClickListener {
+            val intent = Intent(this, DisplayPlaceActivity::class.java)
+            intent.putExtra("PLACE_ID", place.id)
+            startActivity(intent)
+            finish()
+        }
+
         showPlaceInfo()
     }
 
@@ -33,9 +41,17 @@ class PlaceInfoActivity : AppCompatActivity() {
         super.onResume()
         val location = PlaceService.getLocation(place.id)
 
+        setToolbarTitle()
+
         findViewById<TextView>(R.id.placeLocation).text =
             location.dropLast(1).joinToString(" -> ") { it.name }
     }
+
+    private fun setToolbarTitle() {
+        val toolbarTitle = findViewById<TextView>(R.id.place_info_toolbar_title)
+        toolbarTitle.text = place.name
+    }
+
 
     private fun showPlaceInfo() {
         placeNameTextView.text = place.name

@@ -42,7 +42,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
                 Intent(this, MainActivity::class.java)
             } else {
                 Intent(this, DisplayPlaceActivity::class.java)
-                intent.putExtra("PLACE_ID", place?.parentId)
+                intent.putExtra("PLACE_ID", PlaceService.findById(place!!.id)?.parentId)
             }
             startActivity(intent)
             finish()
@@ -91,7 +91,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
     private fun setParentButtonTitle() {
         val parentButton = findViewById<Button>(R.id.parent_place_btn_id)
-        place?.parentId?.let { parentButton.text = PlaceService.findById(it)?.name ?: ""}
+        place?.let { PlaceService.findById(it.id)?.parentId?.let { parentId -> parentButton.text = PlaceService.findById(parentId)?.name ?: ""} }
     }
 
     private fun hideOrShowNoChildrenText() {
