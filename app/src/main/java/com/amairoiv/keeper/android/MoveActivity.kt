@@ -74,6 +74,10 @@ class MoveActivity : AppCompatActivity() {
     }
 
     private fun addListViewForPlaces(places: MutableList<Place>, layout: LinearLayout) {
+        val placesCopy = mutableListOf<Place>()
+        placesCopy.addAll(places)
+        placesCopy.removeIf { it.id == placeForMove.id }
+
         val view = ListView(this)
         placeListsStack.push(view)
 
@@ -81,7 +85,7 @@ class MoveActivity : AppCompatActivity() {
             LayoutParams.MATCH_PARENT,
             LayoutParams.WRAP_CONTENT
         )
-        val adapter = PlaceAdapter(this, places)
+        val adapter = PlaceAdapter(this, placesCopy)
         view.adapter = adapter
 
         view.setOnItemClickListener { _, _, position, _ ->
