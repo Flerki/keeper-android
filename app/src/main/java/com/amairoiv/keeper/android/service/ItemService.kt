@@ -2,6 +2,7 @@ package com.amairoiv.keeper.android.service
 
 import com.amairoiv.keeper.android.dto.UpdateItem
 import com.amairoiv.keeper.android.model.Item
+import com.amairoiv.keeper.android.model.Place
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -33,6 +34,22 @@ object ItemService {
             .build()
 
         client.newCall(request).execute()
+    }
 
+    fun move(item: Item, newPlace: Place) {
+        if (item.placeId == newPlace.id) {
+            return
+        }
+
+        item.placeId = newPlace.id
+
+        val dto = UpdateItem(item.name, item.placeId)
+        val url = "http://10.0.2.2:8080/items/${item.id}"
+        val request: Request = Request.Builder()
+            .url(url)
+            .put(gson.toJson(dto).toRequestBody(JSON))
+            .build()
+
+        client.newCall(request).execute()
     }
 }

@@ -1,5 +1,6 @@
 package com.amairoiv.keeper.android
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -62,5 +63,11 @@ class ItemInfoActivity : AppCompatActivity() {
 
         val alertDialogAndroid = alertDialogBuilderUserInput.create()
         alertDialogAndroid.show()
+    }
+
+    fun move(view: View) {
+        val intent = Intent(this, MoveItemActivity::class.java)
+        intent.putExtra("ITEM", item)
+        startActivity(intent)
     }
 }
