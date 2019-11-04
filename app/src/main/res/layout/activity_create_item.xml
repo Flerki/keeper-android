@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ItemsActivity"
+    tools:context=".RegisterActivity"
     android:theme="@style/ToolbarAppTheme">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/items_toolbar"
@@ -24,33 +24,44 @@
             <TextView
                 android:id="@+id/items_toolbar_title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textSize="22sp"
-                android:gravity="center"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"/>
 
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
-            android:id="@+id/noItemsText"
-            android:layout_width="match_parent"
+            android:id="@+id/enterItemNameText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:text="Здесь еще нет вещей"/>
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="87dp"
+            android:text="Введите имя вещи:"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ListView
-            android:id="@+id/items"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/enterItemName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:divider="@color/colorPrimary"
-            android:dividerHeight="5dp"
-            android:focusable="true"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginStart="22dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enterItemNameText" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="22dp"
+            android:onClick="createItem"
+            android:text="Добавить вещь"
+            app:layout_constraintTop_toBottomOf="@+id/enterItemName" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

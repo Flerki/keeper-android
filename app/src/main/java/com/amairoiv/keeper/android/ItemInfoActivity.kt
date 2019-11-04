@@ -1,6 +1,8 @@
 package com.amairoiv.keeper.android
 
 import android.content.Intent
+import com.amairoiv.keeper.android.service.PlaceService
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.model.Item
-import com.amairoiv.keeper.android.model.Place
 import com.amairoiv.keeper.android.service.ItemService
-import com.amairoiv.keeper.android.service.PlaceService
 
 class ItemInfoActivity : AppCompatActivity() {
 
@@ -20,6 +20,7 @@ class ItemInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_item_info)
         showItemInfo()
     }

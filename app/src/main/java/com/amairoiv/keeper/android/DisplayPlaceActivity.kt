@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Place
 import com.amairoiv.keeper.android.service.PlaceService
@@ -33,8 +34,19 @@ class DisplayPlaceActivity : AppCompatActivity() {
         if (place == null) {
             hideInfoAndItemsButtons()
         }
-        setSupportActionBar(findViewById(R.id.places_toolbar))
+        val toolbar = findViewById<Toolbar>(R.id.places_toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        findViewById<Button>(R.id.parent_place_btn_id).setOnClickListener {
+            val intent = if (place == null) {
+                Intent(this, MainActivity::class.java)
+            } else {
+                Intent(this, DisplayPlaceActivity::class.java)
+                intent.putExtra("PLACE_ID", place?.parentId)
+            }
+            startActivity(intent)
+            finish()
+        }
         showPlacesView()
     }
 
@@ -68,12 +80,18 @@ class DisplayPlaceActivity : AppCompatActivity() {
         } else {
             hideOrShowNoChildrenText()
             setToolbarTitle()
+            setParentButtonTitle()
         }
     }
 
     private fun setToolbarTitle() {
         val toolbarTitle = findViewById<TextView>(R.id.places_toolbar_title)
         toolbarTitle.text = if (placeId == null) "Места" else place!!.name
+    }
+
+    private fun setParentButtonTitle() {
+        val parentButton = findViewById<Button>(R.id.parent_place_btn_id)
+        place?.parentId?.let { parentButton.text = PlaceService.findById(it)?.name ?: ""}
     }
 
     private fun hideOrShowNoChildrenText() {

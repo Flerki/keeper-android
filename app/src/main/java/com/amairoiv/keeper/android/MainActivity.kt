@@ -13,6 +13,7 @@ import com.amairoiv.keeper.android.service.UserService
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
         val SDK_INT = android.os.Build.VERSION.SDK_INT
         if (SDK_INT > 8) {
@@ -49,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 
             if (index == exitIndex){
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 UserService.logout()
                 startActivity(intent)
-
                 finish()
             }
         }

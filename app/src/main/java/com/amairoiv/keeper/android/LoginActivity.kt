@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
                         .permitAll().build()
                     StrictMode.setThreadPolicy(policy)
                 }
+        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_login)
     }
 
