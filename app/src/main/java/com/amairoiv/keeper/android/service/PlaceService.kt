@@ -37,11 +37,7 @@ object PlaceService {
         val response: Response = client.newCall(request).execute()
         val result = response.body?.string()
 
-        val resultList = gson.fromJson(result, Array<Item>::class.java).toList()
-
-        //TODO: add placeId to response entities?
-        resultList.forEach{it.placeId = placeId}
-        return resultList
+        return gson.fromJson(result, Array<Item>::class.java).toList()
     }
 
     fun getRoot(): MutableList<Place> {
@@ -159,7 +155,7 @@ object PlaceService {
         result.add(currentPlace)
 
         var currentPlaceId: String?
-        while (currentPlace.parentId != null){
+        while (currentPlace.parentId != null) {
             currentPlaceId = currentPlace.parentId
             currentPlace = findById(currentPlaceId!!)!!
             result.add(currentPlace)
