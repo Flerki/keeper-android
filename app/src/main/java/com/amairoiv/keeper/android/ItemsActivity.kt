@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -62,7 +63,15 @@ class ItemsActivity : AppCompatActivity() {
         this.items.addAll(items)
         adapter.notifyDataSetChanged()
         setToolbarTitle()
+        setParentButtonTitle()
         findViewById<TextView>(R.id.noItemsText).visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+
+        findViewById<Button>(R.id.back_to_place_btn_id).setOnClickListener {
+            val intent = Intent(this, DisplayPlaceActivity::class.java)
+            intent.putExtra("PLACE_ID", place.id)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setToolbarTitle() {
@@ -70,6 +79,10 @@ class ItemsActivity : AppCompatActivity() {
         toolbarTitle.text = "Вещи в ${place.name}"
     }
 
+    private fun setParentButtonTitle() {
+        val backButton = findViewById<Button>(R.id.back_to_place_btn_id)
+        backButton.text = place.name
+    }
 
     private fun showItemsView() {
 

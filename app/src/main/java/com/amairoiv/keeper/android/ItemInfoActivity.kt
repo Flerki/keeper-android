@@ -6,6 +6,7 @@ import com.amairoiv.keeper.android.service.PlaceService
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -20,7 +21,6 @@ class ItemInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_item_info)
         showItemInfo()
     }
@@ -38,9 +38,26 @@ class ItemInfoActivity : AppCompatActivity() {
         item = ItemService.get(item.id)
         val location =  PlaceService.getLocation(item.placeId)
 
+        setToolbarTitle()
+
         findViewById<TextView>(R.id.itemLocation).text =
             location.joinToString(" -> ") { it.name }
+
+        findViewById<Button>(R.id.back_to_items_btn_id).setOnClickListener {
+            val intent = Intent(this, ItemsActivity::class.java)
+            intent.putExtra("PLACE", PlaceService.findById(item.placeId))
+            val items = PlaceService.getItemForPlace(item.placeId)
+            intent.putExtra("ITEMS", items.toTypedArray())
+            startActivity(intent)
+            finish()
+        }
     }
+
+    private fun setToolbarTitle() {
+        val toolbarTitle = findViewById<TextView>(R.id.item_info_toolbar_title)
+        toolbarTitle.text = item.name
+    }
+
 
     fun deleteItem(view: View) {
         ItemService.deleteItem(item.id)
