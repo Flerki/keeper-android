@@ -49,6 +49,9 @@ object PlaceService {
     }
 
     fun findById(placeId: String): Place? {
+        if (places.isEmpty()) {
+            initializePlaceHierarchyFor(UserService.getUser())
+        }
         return findById(places, placeId)
     }
 

@@ -17,6 +17,17 @@ object ItemService {
     private val gson = Gson()
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
 
+    fun getAll(userId: String): MutableList<Item> {
+        val url = "http://10.0.2.2:8080/users/$userId/items"
+        val request: Request = Request.Builder()
+            .url(url)
+            .build()
+        val response: Response = client.newCall(request).execute()
+        val result = response.body?.string()
+
+        return gson.fromJson(result, Array<Item>::class.java).toMutableList()
+    }
+
     fun get(itemId: String): Item {
         val url = "http://10.0.2.2:8080/items/$itemId"
         val request: Request = Request.Builder()

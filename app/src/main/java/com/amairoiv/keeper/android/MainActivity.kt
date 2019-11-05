@@ -6,6 +6,7 @@ import android.os.StrictMode
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.amairoiv.keeper.android.service.ItemService
 import com.amairoiv.keeper.android.service.PlaceService
 import com.amairoiv.keeper.android.service.UserService
 
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         dataList.add("Выход")
 
         val placesIndex = 0
+        val itemsIndex = 1
         val exitIndex = 2
 
         val listView = findViewById<ListView>(R.id.listViewExample)
@@ -45,6 +47,11 @@ class MainActivity : AppCompatActivity() {
                 val testUserId = UserService.getUser()
                 PlaceService.initializePlaceHierarchyFor(testUserId)
 
+                startActivity(intent)
+            }
+
+            if (index == itemsIndex) {
+                val intent = Intent(this, ItemListActivity::class.java)
                 startActivity(intent)
             }
 
