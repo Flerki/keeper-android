@@ -10,14 +10,22 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="5px"
+        android:paddingLeft="5px">
+
+        <TextView
+            android:id="@+id/locationWhereToMove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/moveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="move"
-            android:text="Переместить" />
+            android:text="Ок" />
 
         <Button
             android:id="@+id/backBtn"

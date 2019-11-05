@@ -6,6 +6,7 @@ import android.view.ViewGroup.LayoutParams
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Place
@@ -29,6 +30,7 @@ class MoveActivity : AppCompatActivity() {
         placeForMove = intent.getSerializableExtra("PLACE") as Place
 
         show()
+        refreshLocation()
     }
 
     private fun show() {
@@ -66,6 +68,7 @@ class MoveActivity : AppCompatActivity() {
             addListViewForPlaces(children, layout)
 
             backButton.isEnabled = true
+            refreshLocation()
         }
 
         layout.addView(view)
@@ -84,6 +87,20 @@ class MoveActivity : AppCompatActivity() {
 
         if (placeListsStack.size == 1) {
             backButton.isEnabled = false
+        }
+
+        refreshLocation()
+    }
+
+    private fun refreshLocation() {
+        val locationWhereToMoveText = findViewById<TextView>(R.id.locationWhereToMove)
+
+        val place = currentPlaceStack.peek()
+        if (place != null) {
+            val location = PlaceService.getLocation(place.id)
+            locationWhereToMoveText.text = "Переместить в " + location.joinToString(" -> ") { it.name } + " ?"
+        } else {
+            locationWhereToMoveText.text = "Сделать самостоятельным местом?"
         }
     }
 

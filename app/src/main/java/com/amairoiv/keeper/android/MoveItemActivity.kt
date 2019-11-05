@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.TextView
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.model.Place
@@ -32,6 +33,7 @@ class MoveItemActivity : AppCompatActivity() {
         itemForMove = intent.getSerializableExtra("ITEM") as Item
 
         show()
+        refreshLocation()
     }
 
     private fun show() {
@@ -61,14 +63,16 @@ class MoveItemActivity : AppCompatActivity() {
 
         view.setOnItemClickListener { _, _, position, _ ->
             view.visibility = View.GONE
-            val chosenPlace = places[position]
-            currentPlaceStack.push(chosenPlace)
+            val choosenPlace = places[position]
+            currentPlaceStack.push(choosenPlace)
 
-            val children = chosenPlace.children
+            val children = choosenPlace.children
             addListViewForPlaces(children, layout)
 
             backButton.isEnabled = true
             moveButton.isEnabled = true
+
+            refreshLocation()
         }
 
         layout.addView(view)
@@ -88,6 +92,20 @@ class MoveItemActivity : AppCompatActivity() {
         if (placeListsStack.size == 1) {
             backButton.isEnabled = false
             moveButton.isEnabled = false
+        }
+
+        refreshLocation()
+    }
+
+    private fun refreshLocation() {
+        val locationWhereToMoveText = findViewById<TextView>(R.id.locationWhereToMove)
+
+        val place = currentPlaceStack.peek()
+        if (place != null) {
+            val location = PlaceService.getLocation(place.id)
+            locationWhereToMoveText.text = "Переместить в " + location.joinToString(" -> ") { it.name } + " ?"
+        } else {
+            locationWhereToMoveText.text = "Место для перемещения не выбрано"
         }
     }
 
