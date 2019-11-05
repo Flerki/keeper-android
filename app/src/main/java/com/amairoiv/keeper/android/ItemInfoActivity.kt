@@ -89,4 +89,10 @@ class ItemInfoActivity : AppCompatActivity() {
         intent.putExtra("ITEM", item)
         startActivity(intent)
     }
+
+    fun goToLocation(view: View) {
+        val intent = Intent(this, DisplayPlaceActivity::class.java)
+        intent.putExtra("PLACE_ID", item.placeId)
+        startActivity(intent)
+    }
 }

@@ -77,11 +77,19 @@
             android:text="Местоположение: "
             android:textSize="22sp"/>
 
+
         <TextView
             android:id="@+id/itemLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"/>
+
+        <Button
+            android:id="@+id/itemInfoGoToLocationBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Перейти"
+            android:onClick="goToLocation" />
 
         <LinearLayout
             android:layout_width="wrap_content"
