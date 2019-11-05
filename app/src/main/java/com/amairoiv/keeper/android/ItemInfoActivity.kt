@@ -46,8 +46,6 @@ class ItemInfoActivity : AppCompatActivity() {
         findViewById<Button>(R.id.back_to_items_btn_id).setOnClickListener {
             val intent = Intent(this, ItemsActivity::class.java)
             intent.putExtra("PLACE", PlaceService.findById(item.placeId))
-            val items = PlaceService.getItemForPlace(item.placeId)
-            intent.putExtra("ITEMS", items.toTypedArray())
             startActivity(intent)
             finish()
         }

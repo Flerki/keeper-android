@@ -139,13 +139,8 @@ class DisplayPlaceActivity : AppCompatActivity() {
     }
 
     fun showItems(view: View) {
-
         val itemsIntent = Intent(this, ItemsActivity::class.java)
-
         itemsIntent.putExtra("PLACE", place)
-
-        val items = PlaceService.getItemForPlace(placeId!!)
-        itemsIntent.putExtra("ITEMS", items.toTypedArray())
 
         startActivity(itemsIntent)
     }
