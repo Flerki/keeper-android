@@ -48,12 +48,14 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Имя: " />
+                android:text="Имя: "
+                android:textSize="22sp"/>
 
             <TextView
                 android:id="@+id/itemName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="22sp"/>
 
         </LinearLayout>
 
@@ -69,22 +71,17 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:orientation="horizontal">
+            android:text="Местоположение: "
+            android:textSize="22sp"/>
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="Местоположение: " />
-
-            <TextView
-                android:id="@+id/itemLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/itemLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

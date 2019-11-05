@@ -39,6 +39,13 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10px"
+        android:paddingTop="5px">
+
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
@@ -47,11 +54,13 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textSize="22sp"
                 android:text="Имя места: " />
 
             <TextView
                 android:id="@+id/placeName"
                 android:layout_width="wrap_content"
+                android:textSize="22sp"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
@@ -69,22 +78,18 @@
 
         </LinearLayout>
 
-        <LinearLayout
+
+        <TextView
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:textSize="22sp"
+            android:text="Местоположение: " />
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="Местоположение: " />
-
-            <TextView
-                android:id="@+id/placeLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/placeLocation"
+            android:layout_width="wrap_content"
+            android:textSize="22sp"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,6 +114,10 @@
                 android:onClick="deletePlace"
                 android:text="Удалить" />
         </LinearLayout>
+
+    </LinearLayout>
+
+
 
     </LinearLayout>
 
