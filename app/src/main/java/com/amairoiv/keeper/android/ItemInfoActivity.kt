@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.service.ItemService
+import com.amairoiv.keeper.android.service.UserService
 
 class ItemInfoActivity : AppCompatActivity() {
 
@@ -23,6 +24,8 @@ class ItemInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_info)
         showItemInfo()
+
+        UserService.addToRecent(item)
     }
 
     private fun showItemInfo() {
