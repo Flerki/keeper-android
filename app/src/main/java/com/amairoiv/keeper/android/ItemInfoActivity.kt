@@ -86,7 +86,7 @@ class ItemInfoActivity : AppCompatActivity() {
 
     fun move(view: View) {
         val intent = Intent(this, MoveItemActivity::class.java)
-        intent.putExtra("ITEM", item)
+        intent.putExtra("ITEMS", listOf(item).toTypedArray())
         startActivity(intent)
     }
 

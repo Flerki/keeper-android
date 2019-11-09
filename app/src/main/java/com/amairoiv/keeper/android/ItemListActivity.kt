@@ -1,7 +1,12 @@
 package com.amairoiv.keeper.android
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,17 +15,17 @@ import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.service.ItemService
 import com.amairoiv.keeper.android.service.PlaceService
 import com.amairoiv.keeper.android.service.UserService
-import android.text.Editable
-import android.text.TextWatcher
 
 
 class ItemListActivity : AppCompatActivity() {
 
     private val items: MutableList<Item> = ArrayList()
     private val filteredItems: MutableList<Item> = ArrayList()
+    private val selectedItems: MutableList<Item> = ArrayList()
 
     private lateinit var adapter: ItemAdapter
     private lateinit var searchInput: EditText
+    private lateinit var moveSelectedItemsBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +39,20 @@ class ItemListActivity : AppCompatActivity() {
                 filterItems()
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                clearSelectedItems()
+            }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
+        searchInput.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                clearSelectedItems()
+            }
+        }
+
+        moveSelectedItemsBtn = findViewById(R.id.moveSelectedItemsBtn)
+        moveSelectedItemsBtn.isEnabled = false
 
         showItemsView()
     }
@@ -67,12 +82,18 @@ class ItemListActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
+    private fun clearSelectedItems() {
+        selectedItems.clear()
+        moveSelectedItemsBtn.isEnabled = false
+    }
+
     private fun showItemsView() {
 
         val listView = findViewById<ListView>(R.id.itemList)
 
         adapter = ItemAdapter(this, filteredItems)
 
+        listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.adapter = adapter
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -84,5 +105,28 @@ class ItemListActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+        listView.setOnItemLongClickListener { _, view, position, _ ->
+            val item = items[position]
+
+            if (selectedItems.contains(item)) {
+                selectedItems.remove(item)
+                view.setBackgroundColor(Color.parseColor("#FAFAFA"))
+            } else {
+                selectedItems.add(item)
+                view.setBackgroundColor(Color.parseColor("#00E6CF"))
+            }
+
+            moveSelectedItemsBtn.isEnabled = selectedItems.isNotEmpty()
+
+            true
+        }
+    }
+
+    fun move(view: View) {
+        val intent = Intent(this, MoveItemActivity::class.java)
+        intent.putExtra("ITEMS", selectedItems.toTypedArray())
+        clearSelectedItems()
+        startActivity(intent)
     }
 }

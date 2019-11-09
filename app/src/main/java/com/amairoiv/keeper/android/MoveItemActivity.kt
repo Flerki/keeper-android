@@ -1,6 +1,5 @@
 package com.amairoiv.keeper.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +7,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.adapter.PlaceAdapter
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.model.Place
@@ -17,7 +17,7 @@ import java.util.*
 
 class MoveItemActivity : AppCompatActivity() {
 
-    private lateinit var itemForMove: Item
+    private lateinit var itemForMove: List<Item>
 
     private var currentPlaceStack: Stack<Place?> = Stack()
     private var placeListsStack: Stack<ListView> = Stack()
@@ -30,7 +30,7 @@ class MoveItemActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_move)
 
-        itemForMove = intent.getSerializableExtra("ITEM") as Item
+        itemForMove = (intent.getSerializableExtra("ITEMS") as Array<Item>).toList()
 
         show()
         refreshLocation()
@@ -80,7 +80,7 @@ class MoveItemActivity : AppCompatActivity() {
 
     fun move(view: View) {
         val currentPlace = currentPlaceStack.pop()
-        ItemService.move(itemForMove, currentPlace!!)
+        itemForMove.map { item -> ItemService.move(item, currentPlace!!) }
         finish()
     }
 

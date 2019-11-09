@@ -41,6 +41,9 @@ object PlaceService {
     }
 
     fun getRoot(): MutableList<Place> {
+        if (places.isEmpty()) {
+            initializePlaceHierarchyFor(UserService.getUser())
+        }
         return places
     }
 
