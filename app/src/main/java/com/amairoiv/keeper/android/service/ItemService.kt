@@ -13,12 +13,15 @@ import okhttp3.Response
 
 object ItemService {
 
+    private const val BASE_URL = "10.0.2.2"
+    private const val BASE_PORT = "8080"
+
     private val client = OkHttpClient()
     private val gson = Gson()
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
 
     fun getAll(userId: String): MutableList<Item> {
-        val url = "http://10.0.2.2:8080/users/$userId/items"
+        val url = "http://$BASE_URL:$BASE_PORT/users/$userId/items"
         val request: Request = Request.Builder()
             .url(url)
             .build()
@@ -29,7 +32,7 @@ object ItemService {
     }
 
     fun get(itemId: String): Item {
-        val url = "http://10.0.2.2:8080/items/$itemId"
+        val url = "http://$BASE_URL:$BASE_PORT/items/$itemId"
         val request: Request = Request.Builder()
             .url(url)
             .build()
@@ -39,7 +42,7 @@ object ItemService {
         return gson.fromJson(result, Item::class.java)
     }
     fun deleteItem(itemId: String) {
-        val url = "http://10.0.2.2:8080/items/$itemId"
+        val url = "http://$BASE_URL:$BASE_PORT/items/$itemId"
         val request: Request = Request.Builder()
             .url(url)
             .delete()
@@ -51,7 +54,7 @@ object ItemService {
         item.name = newName
 
         val dto = UpdateItem(newName, item.placeId)
-        val url = "http://10.0.2.2:8080/items/${item.id}"
+        val url = "http://$BASE_URL:$BASE_PORT/items/${item.id}"
         val request: Request = Request.Builder()
             .url(url)
             .put(gson.toJson(dto).toRequestBody(JSON))
@@ -68,7 +71,7 @@ object ItemService {
         item.placeId = newPlace.id
 
         val dto = UpdateItem(item.name, item.placeId)
-        val url = "http://10.0.2.2:8080/items/${item.id}"
+        val url = "http://$BASE_URL:$BASE_PORT/items/${item.id}"
         val request: Request = Request.Builder()
             .url(url)
             .put(gson.toJson(dto).toRequestBody(JSON))
@@ -78,7 +81,7 @@ object ItemService {
     }
 
     fun createItem(dto: CreateItem) {
-        val url = "http://10.0.2.2:8080/items"
+        val url = "http://$BASE_URL:$BASE_PORT/items"
         val request: Request = Request.Builder()
             .url(url)
             .post(gson.toJson(dto).toRequestBody(JSON))

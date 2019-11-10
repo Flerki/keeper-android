@@ -12,6 +12,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
 object PlaceService {
+
+    private const val BASE_URL = "10.0.2.2"
+    private const val BASE_PORT = "8080"
+
     private val client = OkHttpClient()
     private val gson = Gson()
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
@@ -19,7 +23,7 @@ object PlaceService {
     private var places: MutableList<Place> = ArrayList()
 
     fun initializePlaceHierarchyFor(userId: String) {
-        val url = "http://10.0.2.2:8080/users/$userId/places"
+        val url = "http://$BASE_URL:$BASE_PORT/users/$userId/places"
         val request: Request = Request.Builder()
             .url(url)
             .build()
@@ -30,7 +34,7 @@ object PlaceService {
     }
 
     fun getItemForPlace(placeId: String): List<Item> {
-        val url = "http://10.0.2.2:8080/places/$placeId/items"
+        val url = "http://$BASE_URL:$BASE_PORT/places/$placeId/items"
         val request: Request = Request.Builder()
             .url(url)
             .build()
@@ -74,7 +78,7 @@ object PlaceService {
     fun update(place: Place) {
         val dto = UpdatePlace(place.name, place.parentId)
 
-        val url = "http://10.0.2.2:8080/places/${place.id}"
+        val url = "http://$BASE_URL:$BASE_PORT/places/${place.id}"
         val request: Request = Request.Builder()
             .url(url)
             .put(gson.toJson(dto).toRequestBody(JSON))
@@ -86,7 +90,7 @@ object PlaceService {
     }
 
     fun deletePlace(placeId: String) {
-        val url = "http://10.0.2.2:8080/places/$placeId"
+        val url = "http://$BASE_URL:$BASE_PORT/places/$placeId"
         val request: Request = Request.Builder()
             .url(url)
             .delete()
@@ -104,7 +108,7 @@ object PlaceService {
     }
 
     fun createPlace(dto: CreatePlace) {
-        val url = "http://10.0.2.2:8080/places"
+        val url = "http://$BASE_URL:$BASE_PORT/places"
         val request: Request = Request.Builder()
             .url(url)
             .post(gson.toJson(dto).toRequestBody(JSON))
@@ -132,7 +136,7 @@ object PlaceService {
 
         val dto = UpdatePlace(placeForMove.name, newParentId)
 
-        val url = "http://10.0.2.2:8080/places/${placeForMove.id}"
+        val url = "http://$BASE_URL:$BASE_PORT/places/${placeForMove.id}"
         val request: Request = Request.Builder()
             .url(url)
             .put(gson.toJson(dto).toRequestBody(JSON))

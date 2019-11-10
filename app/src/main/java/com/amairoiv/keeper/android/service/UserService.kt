@@ -11,6 +11,9 @@ import okhttp3.Response
 
 object UserService {
 
+    private const val BASE_URL = "10.0.2.2"
+    private const val BASE_PORT = "8080"
+
     private val client = OkHttpClient()
     private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
     private var userId: String? = null
@@ -19,7 +22,7 @@ object UserService {
     fun register(email: String, password: String): String {
         val json = "{\"email\":\"$email\", \"password\":\"$password\"}"
         val body = json.toRequestBody(JSON)
-        val url = "http://10.0.2.2:8080/users"
+        val url = "http://$BASE_URL:$BASE_PORT/users"
         val request: Request = Request.Builder()
             .url(url)
             .put(body)
@@ -33,7 +36,7 @@ object UserService {
     fun auth(email: String, password: String): String? {
         val json = "{\"email\":\"$email\", \"password\":\"$password\"}"
         val body = json.toRequestBody(JSON)
-        val url = "http://10.0.2.2:8080/users"
+        val url = "http://$BASE_URL:$BASE_PORT/users"
         val request: Request = Request.Builder()
             .url(url)
             .post(body)
@@ -45,7 +48,7 @@ object UserService {
     }
 
     fun addPlace(placeId: String){
-        val url = "http://10.0.2.2:8080/users/$userId/places/$placeId"
+        val url = "http://$BASE_URL:$BASE_PORT/users/$userId/places/$placeId"
         val request: Request = Request.Builder()
             .url(url)
             .put("".toRequestBody())
@@ -54,7 +57,7 @@ object UserService {
     }
 
     fun deletePlace(placeId: String){
-        val url = "http://10.0.2.2:8080/users/$userId/places/$placeId"
+        val url = "http://$BASE_URL:$BASE_PORT/users/$userId/places/$placeId"
         val request: Request = Request.Builder()
             .url(url)
             .delete("".toRequestBody())
@@ -76,7 +79,7 @@ object UserService {
     }
 
     fun addToRecent(item: Item) {
-        val url = "http://10.0.2.2:8080/users/${userId}/items/recent/${item.id}"
+        val url = "http://$BASE_URL:$BASE_PORT/users/${userId}/items/recent/${item.id}"
         val request: Request = Request.Builder()
             .url(url)
             .put("".toRequestBody())
@@ -85,7 +88,7 @@ object UserService {
     }
 
     fun getRecentItems(): MutableList<Item> {
-        val url = "http://10.0.2.2:8080/users/${userId}/items/recent"
+        val url = "http://$BASE_URL:$BASE_PORT/users/${userId}/items/recent"
         val request: Request = Request.Builder()
             .url(url)
             .get()
