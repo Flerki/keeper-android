@@ -16,15 +16,6 @@
             android:layout_height="wrap_content"
             android:hint="Поиск по имени вещи" />
 
-        <Button
-            android:id="@+id/moveSelectedItemsBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:text="Переместить"
-            android:onClick="move">
-        </Button>
-
         <ListView
             android:id="@+id/itemList"
             android:layout_width="match_parent"

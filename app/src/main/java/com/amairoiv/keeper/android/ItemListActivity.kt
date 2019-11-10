@@ -5,11 +5,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.forEach
+import androidx.core.view.get
 import com.amairoiv.keeper.android.adapter.ItemAdapter
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.service.ItemService
@@ -25,7 +29,10 @@ class ItemListActivity : AppCompatActivity() {
 
     private lateinit var adapter: ItemAdapter
     private lateinit var searchInput: EditText
-    private lateinit var moveSelectedItemsBtn: Button
+
+    private lateinit var moveItem: MenuItem
+    private lateinit var deleteItem: MenuItem
+    private lateinit var cancelItem: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +58,45 @@ class ItemListActivity : AppCompatActivity() {
             }
         }
 
-        moveSelectedItemsBtn = findViewById(R.id.moveSelectedItemsBtn)
-        moveSelectedItemsBtn.isEnabled = false
-
         showItemsView()
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.item_list_menu, menu)
+        moveItem = menu!!.findItem(R.id.item_list_menu_move)
+        deleteItem = menu.findItem(R.id.item_list_menu_delete)
+        cancelItem = menu.findItem(R.id.item_list_menu_cancel)
+        if (selectedItems.isEmpty()) {
+            changeMenuItemsVisibility(false)
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_list_menu_move -> {
+                val intent = Intent(this, MoveItemActivity::class.java)
+                intent.putExtra("ITEMS", selectedItems.toTypedArray())
+                clearSelectedItems()
+                startActivity(intent)
+            }
+            R.id.item_list_menu_delete -> {
+                selectedItems.map { ItemService.deleteItem(it.id) }
+                clearSelectedItems()
+                val listView = findViewById<ListView>(R.id.itemList)
+                listView.forEach { it.setBackgroundColor(Color.parseColor("#FAFAFA")) }
+                adapter.notifyDataSetChanged()
+            }
+            R.id.item_list_menu_cancel -> {
+                clearSelectedItems()
+                val listView = findViewById<ListView>(R.id.itemList)
+                listView.forEach { it.setBackgroundColor(Color.parseColor("#FAFAFA")) }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -84,7 +124,13 @@ class ItemListActivity : AppCompatActivity() {
 
     private fun clearSelectedItems() {
         selectedItems.clear()
-        moveSelectedItemsBtn.isEnabled = false
+        changeMenuItemsVisibility(false)
+    }
+
+    private fun changeMenuItemsVisibility(isVisible: Boolean) {
+        moveItem.isVisible = isVisible
+        deleteItem.isVisible = isVisible
+        cancelItem.isVisible = isVisible
     }
 
     private fun showItemsView() {
@@ -107,7 +153,7 @@ class ItemListActivity : AppCompatActivity() {
         }
 
         listView.setOnItemLongClickListener { _, view, position, _ ->
-            val item = items[position]
+                val item = items[position]
 
             if (selectedItems.contains(item)) {
                 selectedItems.remove(item)
@@ -117,16 +163,14 @@ class ItemListActivity : AppCompatActivity() {
                 view.setBackgroundColor(Color.parseColor("#00E6CF"))
             }
 
-            moveSelectedItemsBtn.isEnabled = selectedItems.isNotEmpty()
+            if (selectedItems.isNotEmpty()) {
+                changeMenuItemsVisibility(true)
+            } else {
+                changeMenuItemsVisibility(false)
+            }
 
             true
         }
     }
 
-    fun move(view: View) {
-        val intent = Intent(this, MoveItemActivity::class.java)
-        intent.putExtra("ITEMS", selectedItems.toTypedArray())
-        clearSelectedItems()
-        startActivity(intent)
-    }
 }
