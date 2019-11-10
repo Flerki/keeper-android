@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MoveItemActivity"></activity>
+        <activity android:name=".RecentItemsActivity"></activity>
+        <activity android:name=".MoveItemActivity" />
         <activity android:name=".MoveActivity" />
         <activity android:name=".ItemInfoActivity" />
         <activity android:name=".PlaceInfoActivity" />
