@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
             if (index == recentItemsIndex) {
                 val intent = Intent(this, RecentItemsActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
 
             if (index == exitIndex) {

@@ -7,13 +7,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
-import androidx.core.view.get
 import com.amairoiv.keeper.android.adapter.ItemAdapter
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.service.ItemService

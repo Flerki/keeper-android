@@ -10,6 +10,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="4dp"
         android:paddingBottom="4dp"
-        android:textSize="22sp" />
+        android:textSize="26sp" />
 
 </RelativeLayout>

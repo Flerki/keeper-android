@@ -1,5 +1,3 @@
 package com.amairoiv.keeper.android.model
 
-import java.io.Serializable
-
-data class Place(val id: String, var name: String, val children: MutableList<Place>, var parentId: String?): Serializable
+open class Place(id: String, name: String, val children: MutableList<Place>, var parentId: String?) : BaseElement(id, name)

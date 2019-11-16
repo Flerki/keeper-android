@@ -7,7 +7,22 @@
         android:id="@+id/place_menu_add"
         android:icon="@drawable/ic_add_foreground"
         android:title="Добавить"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        >
+        <menu>
+            <item
+                android:id="@+id/place_menu_add_place"
+                android:title="Добавить место"/>
+
+            <item
+                android:id="@+id/place_menu_add_item"
+                android:title="Добавить вещь"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/place_menu_cancel"
+        android:title="Отменить" />
 
     <item
         android:id="@+id/place_menu_move"

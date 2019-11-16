@@ -53,25 +53,28 @@
                 android:layout_weight=".5"
                 android:text="Вещи" />
 
-            <Button
-                android:id="@+id/infoPlaceBtn"
-                android:onClick="showPlaceInfo"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:text="Инфо" />
-
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/base_elements_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Поиск:"
+            android:drawableLeft="@drawable/ic_search"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/noChildrenText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:textSize="40sp"
+            android:paddingTop="35dp"
+            android:gravity="center"
             android:paddingStart="5dp"/>
 
         <ListView
-            android:id="@+id/places"
+            android:id="@+id/base_elements"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
