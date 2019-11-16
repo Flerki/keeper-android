@@ -135,13 +135,15 @@ class ItemsActivity : AppCompatActivity() {
         listView.adapter = adapter
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            val item = items[position]
+            if (selectedItems.isNotEmpty()) {
+                val item = items[position]
 
-            val intent = Intent(this, ItemInfoActivity::class.java)
-            intent.putExtra("ITEM", item)
-            intent.putExtra("PLACE", place)
+                val intent = Intent(this, ItemInfoActivity::class.java)
+                intent.putExtra("ITEM", item)
+                intent.putExtra("PLACE", place)
 
-            startActivity(intent)
+                startActivity(intent)
+            }
         }
 
         listView.setOnItemLongClickListener { _, view, position, _ ->

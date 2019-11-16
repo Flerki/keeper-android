@@ -19,6 +19,7 @@ import java.util.*
 class MoveBaseElementActivity : AppCompatActivity() {
 
     private lateinit var elementsForMove: List<BaseElement>
+    private lateinit var elementIdsForMove: List<String>
 
     private var currentPlaceStack: Stack<Place?> = Stack()
     private var placeListsStack: Stack<ListView> = Stack()
@@ -32,6 +33,7 @@ class MoveBaseElementActivity : AppCompatActivity() {
         setContentView(R.layout.activity_move)
 
         elementsForMove = (intent.getSerializableExtra("ELEMENTS") as Array<BaseElement>).toList()
+        elementIdsForMove = elementsForMove.map { it.id }
 
         show()
         refreshLocation()
@@ -52,6 +54,10 @@ class MoveBaseElementActivity : AppCompatActivity() {
     }
 
     private fun addListViewForPlaces(places: MutableList<Place>, layout: LinearLayout) {
+        val placesCopy = mutableListOf<Place>()
+        placesCopy.addAll(places)
+        placesCopy.removeIf { elementIdsForMove.contains(it.id) }
+
         val view = ListView(this)
         placeListsStack.push(view)
 
@@ -59,12 +65,12 @@ class MoveBaseElementActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        val adapter = PlaceAdapter(this, places)
+        val adapter = PlaceAdapter(this, placesCopy)
         view.adapter = adapter
 
         view.setOnItemClickListener { _, _, position, _ ->
             view.visibility = View.GONE
-            val choosenPlace = places[position]
+            val choosenPlace = placesCopy[position]
             currentPlaceStack.push(choosenPlace)
 
             val children = choosenPlace.children

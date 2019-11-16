@@ -14,7 +14,9 @@
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Поиск по имени вещи" />
+            android:hint="Поиск:"
+            android:drawableLeft="@drawable/ic_search"
+            android:layout_marginTop="10dp"/>
 
         <ListView
             android:id="@+id/itemList"

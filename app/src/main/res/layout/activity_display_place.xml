@@ -49,26 +49,10 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
-            android:id="@+id/placeControls"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <Button
-                android:id="@+id/itemsBtn"
-                android:onClick="showItems"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:text="Вещи" />
-
-        </LinearLayout>
-
         <EditText
             android:id="@+id/base_elements_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:hint="Поиск:"
             android:drawableLeft="@drawable/ic_search"
             android:layout_marginTop="10dp" />

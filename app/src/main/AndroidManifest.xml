@@ -16,7 +16,6 @@
         <activity android:name=".MoveItemActivity" />
         <activity android:name=".MoveActivity" />
         <activity android:name=".ItemInfoActivity" />
-        <activity android:name=".PlaceInfoActivity" />
         <activity android:name=".ItemsActivity" />
         <activity android:name=".ItemListActivity" />
         <activity android:name=".CreatePlaceActivity" />

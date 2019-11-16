@@ -50,9 +50,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
             place = PlaceService.findById(placeId!!)
         }
 
-        if (place == null) {
-            hideItemsButtons()
-        }
         val toolbar = findViewById<Toolbar>(R.id.places_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -171,7 +168,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
             textView.text = "Пусто :("
             textView.visibility = View.VISIBLE
             searchInput.visibility = View.GONE
-            hideItemsButtons()
         } else {
             textView.visibility = View.GONE
         }
@@ -213,10 +209,6 @@ class DisplayPlaceActivity : AppCompatActivity() {
         adapter!!.notifyDataSetChanged()
     }
 
-    private fun hideItemsButtons() {
-        findViewById<Button>(R.id.itemsBtn).visibility = View.GONE
-    }
-
     private fun showPlacesAndItemsView() {
 
         val listView = findViewById<ListView>(R.id.base_elements)
@@ -228,18 +220,20 @@ class DisplayPlaceActivity : AppCompatActivity() {
 
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            val nextElement = elements[position]
+            if (selectedElements.isEmpty()) {
+                val nextElement = elements[position]
 
-            if (nextElement is Place) {
-                val placeIntent = Intent(this, DisplayPlaceActivity::class.java)
-                placeIntent.putExtra("PLACE_ID", nextElement.id)
-                startActivity(placeIntent)
-            } else {
-                val itemsIntent = Intent(this, ItemInfoActivity::class.java)
-                itemsIntent.putExtra("ITEM", nextElement as Item)
-                itemsIntent.putExtra("PLACE", place)
+                if (nextElement is Place) {
+                    val placeIntent = Intent(this, DisplayPlaceActivity::class.java)
+                    placeIntent.putExtra("PLACE_ID", nextElement.id)
+                    startActivity(placeIntent)
+                } else {
+                    val itemsIntent = Intent(this, ItemInfoActivity::class.java)
+                    itemsIntent.putExtra("ITEM", nextElement as Item)
+                    itemsIntent.putExtra("PLACE", place)
 
-                startActivity(itemsIntent)
+                    startActivity(itemsIntent)
+                }
             }
         }
 
@@ -279,16 +273,4 @@ class DisplayPlaceActivity : AppCompatActivity() {
         cancelElement.isVisible = isVisible
     }
 
-
-    fun showItems(view: View) {
-        val itemsIntent = Intent(this, ItemsActivity::class.java)
-        itemsIntent.putExtra("PLACE", place)
-        startActivity(itemsIntent)
-    }
-
-    fun showPlaceInfo(view: View) {
-        val placeInfoIntent = Intent(this, PlaceInfoActivity::class.java)
-        placeInfoIntent.putExtra("PLACE", place)
-        startActivity(placeInfoIntent)
-    }
 }

@@ -15,7 +15,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/items_toolbar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:titleTextColor="@android:color/white"
             android:background="?attr/colorPrimary"
@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:text="ertertdfkgmhfkhnjrtnhjrtg"
                 android:textColor="@android:color/white"/>
 
         </androidx.appcompat.widget.Toolbar>
