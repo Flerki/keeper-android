@@ -10,6 +10,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/items_menu_cancel"
+        android:icon="@drawable/ic_cancel"
+        android:title="Отменить выделение"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
         android:id="@+id/items_menu_move"
         android:title="Переместить" />
 

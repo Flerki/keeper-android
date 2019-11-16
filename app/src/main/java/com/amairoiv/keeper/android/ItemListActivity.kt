@@ -86,6 +86,7 @@ class ItemListActivity : AppCompatActivity() {
                 clearSelectedItems()
                 val listView = findViewById<ListView>(R.id.itemList)
                 listView.forEach { it.setBackgroundColor(Color.parseColor("#FAFAFA")) }
+                onResume()
                 adapter.notifyDataSetChanged()
             }
             R.id.item_list_menu_cancel -> {
