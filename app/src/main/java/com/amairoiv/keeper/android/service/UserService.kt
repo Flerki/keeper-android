@@ -1,5 +1,6 @@
 package com.amairoiv.keeper.android.service
 
+import com.amairoiv.keeper.android.model.Element
 import com.amairoiv.keeper.android.model.Item
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -97,5 +98,17 @@ object UserService {
         val result = response.body?.string()
 
         return gson.fromJson(result, Array<Item>::class.java).toMutableList()
+    }
+
+    fun getAllElements(): MutableList<Element> {
+        val url = "http://$BASE_URL:$BASE_PORT/users/${userId}/elements"
+        val request: Request = Request.Builder()
+            .url(url)
+            .get()
+            .build()
+        val response: Response = client.newCall(request).execute()
+        val result = response.body?.string()
+
+        return gson.fromJson(result, Array<Element>::class.java).toMutableList()
     }
 }

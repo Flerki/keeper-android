@@ -8,12 +8,11 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.amairoiv.keeper.android.R
-import com.amairoiv.keeper.android.model.BaseElement
-import com.amairoiv.keeper.android.model.Item
+import com.amairoiv.keeper.android.model.Element
 
-class BaseElementAdapter(
+class ElementAdapter(
     private val context: Context,
-    private val dataSource: MutableList<BaseElement>
+    private val dataSource: MutableList<Element>
 ) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
@@ -22,14 +21,14 @@ class BaseElementAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val rowView = inflater.inflate(R.layout.list_item_base_element, parent, false)
 
-        val baseElement = getItem(position) as BaseElement
+        val element = getItem(position) as Element
 
         val titleTextView = rowView.findViewById(R.id.base_element_list_title) as TextView
         val folderImageView = rowView.findViewById(R.id.ic_box) as ImageView
-        if (baseElement is Item) {
+        if (!element.isPlace) {
             folderImageView.visibility = View.GONE
         }
-        titleTextView.text = baseElement.name
+        titleTextView.text = element.name
 
         return rowView
     }

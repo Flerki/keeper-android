@@ -5,13 +5,62 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ListView
-        android:id="@+id/listViewExample"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:textSize="32sp"
-        tools:ignore="MissingConstraints" />
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:padding="5dp">
+
+            <EditText
+                android:id="@+id/global_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Глобальный поиск:"
+                android:drawableLeft="@drawable/ic_search"
+                android:layout_marginTop="10dp"
+                android:paddingRight="35dp" />
+
+
+            <Button
+                android:id="@+id/clear_global_search_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_cancel"
+                android:onClick="clearSearch"/>
+
+        </FrameLayout>
+
+
+        <ListView
+            android:id="@+id/listViewExample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="32sp"
+            tools:ignore="MissingConstraints" />
+
+        <ListView
+            android:id="@+id/all_elements_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="32sp"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

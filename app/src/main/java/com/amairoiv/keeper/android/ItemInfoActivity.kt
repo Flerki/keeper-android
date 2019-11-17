@@ -102,7 +102,7 @@ class ItemInfoActivity : AppCompatActivity() {
                 placeIntent.putExtra("PLACE_ID", item.placeId)
                 startActivity(placeIntent)
             }
-            "ItemListActivity", "RecentItemsActivity" -> {
+            "ItemListActivity", "RecentItemsActivity", "MainActivity" -> {
                 finish()
             }
         }
