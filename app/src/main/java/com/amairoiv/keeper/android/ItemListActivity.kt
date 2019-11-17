@@ -7,14 +7,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
 import com.amairoiv.keeper.android.adapter.ItemAdapter
 import com.amairoiv.keeper.android.model.Item
 import com.amairoiv.keeper.android.service.ItemService
-import com.amairoiv.keeper.android.service.PlaceService
 import com.amairoiv.keeper.android.service.UserService
 
 
@@ -33,8 +35,13 @@ class ItemListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.AppTheme)
+
         setContentView(R.layout.activity_item_list)
+        val toolbar = findViewById<Toolbar>(R.id.items_list_toolbar)
+        setSupportActionBar(toolbar)
+
+        val toolbarTitle = findViewById<TextView>(R.id.item_list_back_toolbar_title)
+        toolbarTitle.text = "Вещи"
 
         searchInput = findViewById(R.id.search)
         searchInput.addTextChangedListener(object : TextWatcher {
@@ -122,6 +129,7 @@ class ItemListActivity : AppCompatActivity() {
 
     private fun clearSelectedItems() {
         selectedItems.clear()
+        searchInput.isFocusable = true
         changeMenuItemsVisibility(false)
     }
 
@@ -145,7 +153,7 @@ class ItemListActivity : AppCompatActivity() {
 
             val intent = Intent(this, ItemInfoActivity::class.java)
             intent.putExtra("ITEM", item)
-            intent.putExtra("PLACE", PlaceService.findById(item.placeId))
+            intent.putExtra("PREV_ACTIVITY", "ItemListActivity")
 
             startActivity(intent)
         }
@@ -162,13 +170,20 @@ class ItemListActivity : AppCompatActivity() {
             }
 
             if (selectedItems.isNotEmpty()) {
+                searchInput.isFocusable = false
                 changeMenuItemsVisibility(true)
             } else {
+                searchInput.isFocusable = true
                 changeMenuItemsVisibility(false)
             }
 
             true
         }
+    }
+
+    fun back(view: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
 }

@@ -19,6 +19,7 @@ class ItemInfoActivity : AppCompatActivity() {
 
     private lateinit var item: Item
     private lateinit var placeNameTextView: TextView
+    private lateinit var prevActivity: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class ItemInfoActivity : AppCompatActivity() {
 
     private fun showItemInfo() {
         item = intent.getSerializableExtra("ITEM") as Item
+        prevActivity = intent.getSerializableExtra("PREV_ACTIVITY") as String
 
         placeNameTextView = findViewById(R.id.itemName)
         placeNameTextView.text = item.name
@@ -46,12 +48,6 @@ class ItemInfoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.itemLocation).text =
             location.joinToString(" -> ") { it.name }
 
-        findViewById<Button>(R.id.back_to_items_btn_id).setOnClickListener {
-            val intent = Intent(this, ItemsActivity::class.java)
-            intent.putExtra("PLACE", PlaceService.findById(item.placeId))
-            startActivity(intent)
-            finish()
-        }
     }
 
     private fun setToolbarTitle() {
@@ -97,5 +93,19 @@ class ItemInfoActivity : AppCompatActivity() {
         val intent = Intent(this, DisplayPlaceActivity::class.java)
         intent.putExtra("PLACE_ID", item.placeId)
         startActivity(intent)
+    }
+
+    fun back(view: View) {
+        when (prevActivity) {
+            "DisplayPlaceActivity" -> {
+                val placeIntent = Intent(this, DisplayPlaceActivity::class.java)
+                placeIntent.putExtra("PLACE_ID", item.placeId)
+                startActivity(placeIntent)
+            }
+            "ItemListActivity", "RecentItemsActivity" -> {
+                finish()
+            }
+        }
+
     }
 }

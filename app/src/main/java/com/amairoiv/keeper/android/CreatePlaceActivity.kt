@@ -2,6 +2,7 @@ package com.amairoiv.keeper.android
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.amairoiv.keeper.android.dto.CreatePlace
 import com.amairoiv.keeper.android.service.PlaceService
@@ -13,7 +14,11 @@ class CreatePlaceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_place)
+
+        val toolbarTitle = findViewById<TextView>(R.id.create_place_toolbar_title)
+        toolbarTitle.text = "Добавление места"
     }
+
 
     fun createPlace(view: View) {
         val placeName = enterPlaceName.text.toString()
@@ -24,6 +29,10 @@ class CreatePlaceActivity : AppCompatActivity() {
             parentPlaceId
         )
         PlaceService.createPlace(createPlace)
+        finish()
+    }
+
+    fun finish(view: View) {
         finish()
     }
 }

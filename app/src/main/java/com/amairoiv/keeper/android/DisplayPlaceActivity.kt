@@ -230,7 +230,7 @@ class DisplayPlaceActivity : AppCompatActivity() {
                 } else {
                     val itemsIntent = Intent(this, ItemInfoActivity::class.java)
                     itemsIntent.putExtra("ITEM", nextElement as Item)
-                    itemsIntent.putExtra("PLACE", place)
+                    itemsIntent.putExtra("PREV_ACTIVITY", "DisplayPlaceActivity")
 
                     startActivity(itemsIntent)
                 }

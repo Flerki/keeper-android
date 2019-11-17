@@ -32,6 +32,7 @@
                     android:width="100dp"
                     android:height="50dp"
                     android:textSize="10sp"
+                    android:onClick="back"
                     android:drawableLeft="@drawable/ic_back"
                     style="?android:attr/borderlessButtonStyle"/>
 
