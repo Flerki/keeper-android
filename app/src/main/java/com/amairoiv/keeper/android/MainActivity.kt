@@ -3,6 +3,8 @@ package com.amairoiv.keeper.android
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +26,25 @@ class MainActivity : AppCompatActivity() {
         arrayAdapterListView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.main_menu_exit -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                UserService.logout()
+                startActivity(intent)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
     private fun arrayAdapterListView() {
         title = "Keeper"
 
@@ -31,12 +52,10 @@ class MainActivity : AppCompatActivity() {
         dataList.add("Места")
         dataList.add("Вещи")
         dataList.add("Недавно просмотренные вещи")
-        dataList.add("Выход")
 
         val placesIndex = 0
         val itemsIndex = 1
         val recentItemsIndex = 2
-        val exitIndex = 3
 
         val listView = findViewById<ListView>(R.id.listViewExample)
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
@@ -59,14 +78,6 @@ class MainActivity : AppCompatActivity() {
             if (index == recentItemsIndex) {
                 val intent = Intent(this, RecentItemsActivity::class.java)
                 startActivity(intent)
-            }
-
-            if (index == exitIndex) {
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                UserService.logout()
-                startActivity(intent)
-                finish()
             }
         }
 
