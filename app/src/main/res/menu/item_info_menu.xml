@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ItemInfoActivity">
+
+    <item
+        android:id="@+id/item_info_menu_rename"
+        android:icon="@drawable/ic_delete"
+        android:title="Переименовать"
+        app:showAsAction="withText"/>
+
+    <item
+        android:id="@+id/item_info_menu_move"
+        android:title="Переместить" />
+
+    <item
+        android:id="@+id/item_info_menu_delete"
+        android:title="Удалить" />
+
+</menu>

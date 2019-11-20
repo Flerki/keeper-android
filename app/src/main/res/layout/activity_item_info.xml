@@ -70,18 +70,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="переименовать"
-                android:onClick="rename"/>
-
-        </LinearLayout>
-
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -101,30 +89,6 @@
             android:layout_height="wrap_content"
             android:text="Перейти"
             android:onClick="goToLocation" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/itemInfoMoveBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Переместить"
-                android:onClick="move"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="deleteItem"
-                android:text="Удалить" />
-        </LinearLayout>
 
     </LinearLayout>
 
